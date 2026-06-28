@@ -31,6 +31,11 @@ export type Update = {
 
 export const UPDATES: Update[] = [
   {
+    id: 6,
+    text: "UGC-NET June-2026 Pol Sci memory recalled Paper",
+    date: "Jun 2026",
+  },
+  {
     id: 1,
     text: "New PYQ Solutions added for Political Theory — Unit 1 & 2",
     href: "/paper-2",
