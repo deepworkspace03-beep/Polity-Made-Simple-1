@@ -21,9 +21,14 @@ function ScrollToTop() {
 }
 
 export default function App() {
-  // Read the saved theme, defaulting to dark mode.
+  // Read the saved theme, defaulting to light mode for first-time visitors.
   const [theme, setTheme] = useState<Theme>(() => {
-    return localStorage.getItem("theme") === "light" ? "light" : "dark";
+    const saved = localStorage.getItem("theme");
+    // If nothing is saved, default to light mode
+    if (saved === "dark" || saved === "light") {
+      return saved;
+    }
+    return "light"; // Default to light mode for new visitors
   });
 
   // Whenever the theme changes, update the <html> class and save it.

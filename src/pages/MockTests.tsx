@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, ExternalLink, CalendarDays } from "lucide-react";
-import { mockDays, type MockTest } from "../data/mockTests";
+import { ArrowLeft, ExternalLink, BookOpen } from "lucide-react";
+import { mockPapers, type MockTest } from "../data/mockTests";
 import Reveal from "../components/Reveal";
 
 // Small coloured badge for the paper a test belongs to.
@@ -19,6 +19,7 @@ function PaperBadge({ paper }: { paper: MockTest["paper"] }) {
 
 /**
  * Mock Tests page. Data comes from src/data/mockTests.ts.
+ * Tests are organized paper-wise and unit-wise for clarity.
  * Each test opens its online test in a new tab.
  */
 export default function MockTests() {
@@ -38,49 +39,61 @@ export default function MockTests() {
           Mock Test Series
         </h1>
         <p className="mt-1 text-sm text-muted">
-          10-Day unit-wise series for UGC-NET/JRF · Free, no registration.
-          English &amp; Hindi, with detailed solutions.
+          Paper-wise & unit-wise mock tests for UGC-NET/JRF · Free, no registration.
+          English & Hindi, with detailed solutions.
         </p>
       </div>
 
       <Reveal>
-        <div className="flex flex-col gap-4">
-          {mockDays.map((day) => (
-            <div key={day.date} className="card p-4">
-              {/* day header */}
-              <div className="mb-3 flex items-center gap-2">
-                <CalendarDays size={15} className="text-brand" />
-                <span className="text-sm font-bold">{day.date}</span>
+        <div className="flex flex-col gap-8">
+          {mockPapers.map((paperGroup) => (
+            <div key={paperGroup.paper} className="space-y-4">
+              {/* Paper header */}
+              <div className="flex items-center gap-2">
+                <BookOpen size={18} className="text-brand" />
+                <h2 className="text-lg font-bold">{paperGroup.paper}</h2>
               </div>
 
-              {/* tests for the day */}
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                {day.tests.map((test) => (
-                  <a
-                    key={test.url}
-                    href={test.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center justify-between gap-2 rounded-lg border border-edge bg-bg px-3 py-2.5 transition-all hover:-translate-y-0.5 hover:border-brand/40"
-                  >
-                    <span className="min-w-0">
-                      <span className="flex items-center gap-2">
-                        <PaperBadge paper={test.paper} />
-                        {test.questions && (
-                          <span className="font-mono text-[10px] text-muted">
-                            {test.questions}
+              {/* Sections within paper */}
+              <div className="space-y-3 pl-6">
+                {paperGroup.sections.map((section) => (
+                  <div key={section.name} className="space-y-2">
+                    {/* Section header (Unit or Full-Length) */}
+                    <h3 className="text-sm font-semibold text-muted">
+                      {section.name}
+                    </h3>
+
+                    {/* Tests in section */}
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      {section.tests.map((test) => (
+                        <a
+                          key={test.url}
+                          href={test.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group flex items-center justify-between gap-2 rounded-lg border border-edge bg-bg px-3 py-2.5 transition-all hover:-translate-y-0.5 hover:border-brand/40"
+                        >
+                          <span className="min-w-0">
+                            <span className="flex items-center gap-2">
+                              <PaperBadge paper={test.paper} />
+                              {test.questions && (
+                                <span className="font-mono text-[10px] text-muted">
+                                  {test.questions}
+                                </span>
+                              )}
+                            </span>
+                            <span className="mt-1 block text-sm font-semibold">
+                              {test.title}
+                            </span>
                           </span>
-                        )}
-                      </span>
-                      <span className="mt-1 block text-sm font-semibold">
-                        {test.title}
-                      </span>
-                    </span>
-                    <ExternalLink
-                      size={15}
-                      className="shrink-0 text-muted transition-colors group-hover:text-brand"
-                    />
-                  </a>
+                          <ExternalLink
+                            size={15}
+                            className="shrink-0 text-muted transition-colors group-hover:text-brand"
+                          />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
