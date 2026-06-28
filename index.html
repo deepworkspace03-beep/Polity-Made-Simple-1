@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0B0F13" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <meta name="description" content="UGC NET Political Science study material, mock tests, PYQs and strategy for December 2026." />
+    <meta name="og:title" content="Polity Made Simple | UGC NET Political Science" />
+    <meta name="og:description" content="Free UGC NET Political Science notes, mock tests, and PYQ solutions." />
     <title>Polity Made Simple | UGC NET Political Science</title>
-    <meta
-      name="description"
-      content="UGC NET Political Science study material, mock tests, PYQs and strategy for December 2026."
-    />
 
     <!-- Fonts: Manrope (text) + JetBrains Mono (labels), only the weights we use -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,16 +19,18 @@
 
     <!--
       Apply the saved theme BEFORE React loads so there is no
-      light/dark "flash" on refresh. Defaults to dark mode.
+      light/dark "flash" on refresh. Defaults to light mode for new visitors.
     -->
     <script>
       (function () {
         var saved = localStorage.getItem("theme");
         var root = document.documentElement;
-        if (saved === "light") {
-          root.classList.remove("dark");
+        if (saved === "dark") {
+          root.classList.add("dark");
+          root.classList.remove("light");
         } else {
-          root.classList.add("dark"); // dark is the default
+          root.classList.add("light");
+          root.classList.remove("dark"); // light is the default
         }
       })();
     </script>
