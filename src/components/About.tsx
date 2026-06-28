@@ -22,7 +22,7 @@ export default function About() {
           </div>
 
           {/* Bio */}
-          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
+          <p className="mx-auto mt-6 max-w-xl text-xs leading-relaxed text-muted sm:text-sm">
             The author has qualified UGC-NET/JRF in Political Science (99.826 percentile, June 2025),
             along with GATE in Economics and UGC-NET in Geography. With years of first-hand exam
             experience and mentoring, the focus is on providing quality notes, mock tests, and
@@ -32,11 +32,11 @@ export default function About() {
           {/* Email contact */}
           <a
             href={`mailto:${SITE.email}`}
-            className="mt-6 inline-flex items-center gap-2.5 border border-edge bg-card px-4 py-2.5 text-sm transition-all hover:border-brand/40 hover:shadow-sm"
+            className="mt-5 inline-flex items-center gap-2 border border-edge bg-card px-3 py-2 text-xs transition-all hover:border-brand/40 hover:shadow-sm"
           >
-            <Mail size={14} className="shrink-0 text-brand" />
-            <span className="text-xs text-muted">Questions or feedback?</span>
-            <span className="font-semibold text-fg">{SITE.email}</span>
+            <Mail size={12} className="shrink-0 text-brand" />
+            <span className="hidden text-[10px] text-muted sm:inline">Questions or feedback?</span>
+            <span className="text-xs font-semibold text-fg">{SITE.email}</span>
           </a>
 
         </div>

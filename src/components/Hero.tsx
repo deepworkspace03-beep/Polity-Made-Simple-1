@@ -149,7 +149,7 @@ export default function Hero() {
                   <BookOpen size={12} />
                 </span>
                 <span className="min-w-0 truncate text-xs font-semibold text-fg/80 sm:text-sm">CUET-PG</span>
-                <span className="hidden shrink-0 bg-fg/10 px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-wider text-fg/50 sm:block">
+                <span className="shrink-0 bg-fg/10 px-1 py-px font-mono text-[7px] uppercase tracking-wider text-fg/50 sm:px-1.5 sm:py-0.5 sm:text-[8px]">
                   Upcoming
                 </span>
               </div>
@@ -161,7 +161,7 @@ export default function Hero() {
                   <Landmark size={12} />
                 </span>
                 <span className="min-w-0 truncate text-xs font-semibold text-fg/80 sm:text-sm">Rajasthan SET</span>
-                <span className="hidden shrink-0 bg-fg/10 px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-wider text-fg/50 sm:block">
+                <span className="shrink-0 bg-fg/10 px-1 py-px font-mono text-[7px] uppercase tracking-wider text-fg/50 sm:px-1.5 sm:py-0.5 sm:text-[8px]">
                   Upcoming
                 </span>
               </div>
@@ -172,57 +172,51 @@ export default function Hero() {
           <aside className="hidden w-64 shrink-0 flex-col border-l border-edge px-5 py-16 lg:flex xl:w-72 xl:px-6">
             <div className="sticky top-24">
 
-              {/* Header with View All */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center gradient-brand text-white">
-                    <Zap size={10} fill="currentColor" />
-                  </span>
-                  <p className="eyebrow text-[11px]">New Updates</p>
+              {/* Box container */}
+              <div className="border border-edge bg-card p-4">
+
+                {/* Header with View All */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center gradient-brand text-white">
+                      <Zap size={10} fill="currentColor" />
+                    </span>
+                    <p className="eyebrow text-[11px]">New Updates</p>
+                  </div>
+                  <Link
+                    to="/updates"
+                    className="font-mono text-[10px] uppercase tracking-wider text-brand hover:underline"
+                  >
+                    View All →
+                  </Link>
                 </div>
-                <Link
-                  to="/updates"
-                  className="font-mono text-[10px] uppercase tracking-wider text-brand hover:underline"
-                >
-                  View All →
-                </Link>
-              </div>
 
-              {/* Clickable update items */}
-              <div className="mt-4 space-y-3">
-                {UPDATES.map((update) =>
-                  update.href ? (
+                {/* Divider */}
+                <span className="mt-3 block h-px bg-edge" />
+
+                {/* Clickable update items */}
+                <div className="mt-3 space-y-3">
+                  {UPDATES.map((update) => (
                     <Link
                       key={update.id}
-                      to={update.href}
+                      to={update.href ?? "/updates"}
                       className="group flex gap-2.5"
                     >
                       <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-2" />
-                      <p className="text-sm leading-relaxed text-muted transition-colors group-hover:text-fg">
+                      <p className="text-xs leading-relaxed text-muted transition-colors group-hover:text-fg">
                         {update.text}
                       </p>
                     </Link>
-                  ) : (
-                    <Link
-                      key={update.id}
-                      to="/updates"
-                      className="group flex gap-2.5"
-                    >
-                      <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-2" />
-                      <p className="text-sm leading-relaxed text-muted transition-colors group-hover:text-fg">
-                        {update.text}
-                      </p>
-                    </Link>
-                  )
-                )}
+                  ))}
+                </div>
               </div>
 
-              {/* View all link at bottom */}
+              {/* See all — attached below box */}
               <Link
                 to="/updates"
-                className="mt-5 flex items-center gap-1.5 border border-edge bg-card px-3 py-2 text-xs font-medium text-muted transition-colors hover:text-fg"
+                className="flex items-center justify-center gap-1.5 border border-t-0 border-edge bg-band px-3 py-2 text-[11px] font-medium text-muted transition-colors hover:text-fg"
               >
-                <Zap size={10} className="text-brand-2" />
+                <Zap size={9} className="text-brand-2" />
                 See all announcements →
               </Link>
             </div>

@@ -7,6 +7,12 @@ export default function Updates() {
     <section className="mx-auto max-w-2xl px-4 py-14 sm:px-6">
 
       {/* Header */}
+
+      <div className="mt-6 text-center">
+        <Link to="/" className="text-sm font-medium text-brand hover:underline">
+          ← Back to Home
+        </Link>
+      </div>
       <div className="flex items-center gap-2">
         <span className="flex h-6 w-6 shrink-0 items-center justify-center gradient-brand text-white">
           <Zap size={12} fill="currentColor" />
@@ -56,18 +62,14 @@ export default function Updates() {
       </div>
 
       {/* Admin note */}
-      <div className="mt-8 border border-dashed border-edge p-4 text-xs text-muted">
+      {/* <div className="mt-8 border border-dashed border-edge p-4 text-xs text-muted">
         <span className="font-semibold text-fg">Admin:</span> To add or edit announcements,
         open the file{" "}
         <code className="font-mono text-brand">src/data/updates.ts</code> — instructions
         are written inside that file in plain language.
-      </div>
+      </div> */}
 
-      <div className="mt-6 text-center">
-        <Link to="/" className="text-sm font-medium text-brand hover:underline">
-          ← Back to Home
-        </Link>
-      </div>
+      
     </section>
   );
 }

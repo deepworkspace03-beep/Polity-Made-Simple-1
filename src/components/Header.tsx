@@ -48,24 +48,31 @@ function ThemeToggle({
       className="flex items-center gap-1.5"
     >
       <Sun
-        size={13}
-        className={`transition-colors ${isDark ? "text-muted/40" : "text-brand"}`}
+        size={12}
+        className={`hidden sm:block transition-colors ${isDark ? "text-muted/40" : "text-brand"}`}
       />
-      {/* pill track — keep round as it's a functional switch */}
-      <span
-        className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full transition-colors duration-300 ${
-          isDark ? "bg-brand" : "bg-edge"
-        }`}
-      >
+      {/* Toggle pill + label stacked on mobile */}
+      <span className="flex flex-col items-center gap-0.5">
         <span
-          className={`absolute h-3.5 w-3.5 transform rounded-full bg-white shadow transition-transform duration-300 ${
-            isDark ? "translate-x-[18px]" : "translate-x-1"
+          className={`relative inline-flex h-4 w-7 shrink-0 items-center rounded-full transition-colors duration-300 sm:h-5 sm:w-9 ${
+            isDark ? "bg-brand" : "bg-edge"
           }`}
-        />
+        >
+          <span
+            className={`absolute h-3 w-3 transform rounded-full bg-white shadow transition-transform duration-300 sm:h-3.5 sm:w-3.5 ${
+              isDark ? "translate-x-[14px] sm:translate-x-[18px]" : "translate-x-0.5 sm:translate-x-1"
+            }`}
+          />
+        </span>
+        {/* Current mode icon — only on mobile */}
+        {isDark
+          ? <Moon size={9} className="block text-brand sm:hidden" />
+          : <Sun size={9} className="block text-brand sm:hidden" />
+        }
       </span>
       <Moon
-        size={13}
-        className={`transition-colors ${isDark ? "text-brand" : "text-muted/40"}`}
+        size={12}
+        className={`hidden sm:block transition-colors ${isDark ? "text-brand" : "text-muted/40"}`}
       />
     </button>
   );
