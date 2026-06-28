@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0B0F13" />
+    <title>Polity Made Simple | UGC NET Political Science</title>
+    <meta
+      name="description"
+      content="UGC NET Political Science study material, mock tests, PYQs and strategy for December 2026."
+    />
+
+    <!-- Fonts: Manrope (text) + JetBrains Mono (labels), only the weights we use -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--
+      Apply the saved theme BEFORE React loads so there is no
+      light/dark "flash" on refresh. Defaults to dark mode.
+    -->
+    <script>
+      (function () {
+        var saved = localStorage.getItem("theme");
+        var root = document.documentElement;
+        if (saved === "light") {
+          root.classList.remove("dark");
+        } else {
+          root.classList.add("dark"); // dark is the default
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,246 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  ───────────────────────────────────────────────────────────────
+  THEME COLORS — edit here only. Values are "R G B" channels.
+  Light mode: deliberately tinted slate-blue (much less white).
+  Dark mode: stays near-black.
+  ───────────────────────────────────────────────────────────────
+*/
+:root {
+  --bg:     210 220 232;   /* slate blue-gray — noticeably less white */
+  --band:   200 212 224;   /* deeper tinted alternating band          */
+  --card:   228 238 246;   /* off-white with clear blue tint          */
+  --edge:   182 198 214;   /* visible, clean hairline borders         */
+  --fg:     14  19  25;    /* near-black text                         */
+  --muted:  88  99  112;   /* secondary text                          */
+  --brand:  40  86  196;   /* accent blue                             */
+  --brand-2:18  160 120;   /* accent teal                             */
+
+  --blue:   40  78  158;   /* Paper 1 / Open  (deep blue)             */
+  --green:  22  120 92;    /* Paper 2 / Download (deep green)         */
+  --tg:     41  122 175;   /* Telegram                                */
+  --wa:     31  158 86;    /* WhatsApp green                          */
+}
+
+.dark {
+  --bg:     11  15  19;    /* #0B0F13 near-black  */
+  --band:   14  19  25;    /* subtle elevated band */
+  --card:   17  22  28;    /* card surface         */
+  --edge:   30  39  49;    /* hairline borders     */
+  --fg:     234 238 243;   /* near-white text      */
+  --muted:  140 150 165;   /* secondary text       */
+  --brand:  92  139 235;   /* accent blue          */
+  --brand-2:52  211 158;   /* accent teal          */
+
+  --blue:   60  104 196;
+  --green:  34  150 110;
+  --tg:     56  145 200;
+  --wa:     37  175 96;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-bg text-fg antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand ring-offset-2;
+    --tw-ring-offset-color: rgb(var(--bg));
+  }
+}
+
+@layer components {
+  /* Blue→teal gradient signature. */
+  .gradient-brand {
+    background-image: linear-gradient(135deg, rgb(var(--brand)), rgb(var(--brand-2)));
+  }
+  .text-gradient {
+    background-image: linear-gradient(135deg, rgb(var(--brand)), rgb(var(--brand-2)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Hero section: gradient + subtle dot grid. */
+  .section-hero {
+    background-image:
+      radial-gradient(rgb(var(--edge)) 1.5px, transparent 1.5px),
+      linear-gradient(170deg, rgb(var(--band)) 0%, rgb(var(--bg)) 100%);
+    background-size: 30px 30px, 100% 100%;
+  }
+
+  /* Uppercase mono micro-label above section titles. */
+  .eyebrow {
+    @apply font-mono text-xs font-medium uppercase tracking-[0.18em] text-muted;
+  }
+
+  /* Buttons. */
+  .btn-blue,
+  .btn-green,
+  .btn-tg,
+  .btn-wa {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white transition-transform active:scale-[0.97];
+  }
+  .btn-blue:hover,
+  .btn-green:hover,
+  .btn-tg:hover,
+  .btn-wa:hover {
+    filter: brightness(1.08);
+  }
+  .btn-blue   { background-color: rgb(var(--blue)); }
+  .btn-green  { background-color: rgb(var(--green)); }
+  .btn-tg     { background-color: rgb(var(--tg)); }
+  .btn-wa     { background-color: rgb(var(--wa)); }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 border border-edge bg-card px-4 py-2.5 text-sm font-semibold text-fg transition-transform hover:bg-fg/5 active:scale-[0.97];
+  }
+
+  /* Cards — sharp rectangle. */
+  .card             { @apply border border-edge bg-card; }
+  .card-interactive { @apply border border-edge bg-card transition-all hover:-translate-y-1 hover:border-brand/40 active:scale-[0.99]; }
+
+  /* Active filter pill. */
+  .pill-active {
+    @apply border-transparent text-white;
+    background-color: rgb(var(--blue));
+  }
+}
+
+/* ── Reveal (scroll fade-in) ── */
+.reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal-visible { opacity: 1; transform: none; }
+
+/* ── Sidebar slide ── */
+.sidebar-enter         { transform: translateX(100%); }
+.sidebar-enter-active  { transform: translateX(0); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); }
+
+/* ── Marquee ticker ── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  display: inline-block;
+  animation: marquee 32s linear infinite;
+  will-change: transform;
+}
+.animate-marquee:hover { animation-play-state: paused; }
+
+/* ── Toast ── */
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-toast { animation: toastIn 0.25s ease-out both; }
+
+/* ──────────────────────────────────────────────────────────
+   HERO ANIMATIONS
+   ────────────────────────────────────────────────────────── */
+
+/* Entrance: fade in + slide up */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Continuous gentle float (exam badge) */
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* Slow opacity pulse (glow blobs) */
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.75; }
+  50%       { opacity: 1; }
+}
+
+/* Base entrance class */
+.anim-hero {
+  animation: heroFadeUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Stagger delays — apply alongside .anim-hero */
+.anim-d1 { animation-delay: 60ms; }
+.anim-d2 { animation-delay: 150ms; }
+.anim-d3 { animation-delay: 260ms; }
+.anim-d4 { animation-delay: 380ms; }
+.anim-d5 { animation-delay: 500ms; }
+.anim-d6 { animation-delay: 620ms; }
+
+/* Continuous utilities */
+.anim-float { animation: heroFloat 4.2s ease-in-out infinite; }
+.anim-glow  { animation: glowPulse 6s   ease-in-out infinite; }
+.anim-glow-slow { animation: glowPulse 9s ease-in-out infinite 1.5s; }
+
+/* Honour the OS reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .anim-hero { opacity: 1; transform: none; transition: none; animation: none; }
+  .anim-float, .anim-glow, .anim-glow-slow { animation: none; }
+  .animate-marquee { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ──────────────────────────────────────────────────────────
+   HERO CARD & CHIP HOVER EFFECTS
+   ────────────────────────────────────────────────────────── */
+
+/* Shared base transition for paper cards */
+.hero-card {
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.22s ease,
+              border-color 0.22s ease;
+}
+
+/* Paper 1 — blue accent */
+.hero-card-p1 {
+  border-left: 3px solid rgb(var(--blue));
+}
+.hero-card-p1:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 36px rgb(var(--blue) / 0.22);
+  border-color: rgb(var(--blue) / 0.45);
+  border-left-color: rgb(var(--blue));
+}
+.hero-card-p1:active { transform: scale(0.98); }
+
+/* Paper 2 — green accent */
+.hero-card-p2 {
+  border-left: 3px solid rgb(var(--green));
+}
+.hero-card-p2:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 36px rgb(var(--green) / 0.22);
+  border-color: rgb(var(--green) / 0.45);
+  border-left-color: rgb(var(--green));
+}
+.hero-card-p2:active { transform: scale(0.98); }
+
+/* Shared base transition for upcoming chips */
+.hero-chip {
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.18s ease,
+              border-color 0.18s ease;
+}
+
+/* CUET-PG — teal accent */
+.hero-chip-cuet:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgb(var(--brand-2) / 0.25);
+  border-color: rgb(var(--brand-2) / 0.55);
+}
+.hero-chip-cuet:active { transform: scale(0.97); }
+
+/* Rajasthan SET — amber accent */
+.hero-chip-rset:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgb(245 158 11 / 0.25);
+  border-color: rgb(245 158 11 / 0.55);
+}
+.hero-chip-rset:active { transform: scale(0.97); }
