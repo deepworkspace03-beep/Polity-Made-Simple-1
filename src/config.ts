@@ -23,6 +23,22 @@ export const SITE = {
   email: "deep.workspace03@gmail.com",
 };
 
+// ───────────────────────────────────────────────────────────────
+//  AUTHOR / MENTOR  — content for the "Meet Your Mentor" section.
+//  Edit the name, roles and bio here (no need to touch components).
+// ───────────────────────────────────────────────────────────────
+export const AUTHOR = {
+  name: "Deepak Kumar Swami",
+  roles: ["Founder", "Mentor", "Educator"], // joined with a "•" separator
+  bio:
+    "Qualified UGC NET JRF (Political Science) with 99.826 percentile (2025), " +
+    "along with GATE (Economics) and UGC NET (Geography). Built this platform " +
+    "to help aspirants crack JRF through high-quality notes, PYQ analysis, " +
+    "realistic mock tests and practical preparation strategies — making " +
+    "learning simple, smart and effective.",
+  contactLabel: "For queries & feedback",
+};
+
 // Header navigation. "/#id" links scroll to a homepage section;
 // plain paths open another page.
 export const NAV_LINKS = [

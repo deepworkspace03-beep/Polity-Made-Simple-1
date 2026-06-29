@@ -1,24 +1,20 @@
 // AUTO-ORGANISED RESOURCE DATA — edit names/links here.
 // Each file's `url` opens the Google Drive PDF in a new tab.
 // To add a file: add { name, url } under the right category.
+// NOTE: the official syllabus links live in src/data/syllabus.ts (single
+// source of truth, shared with the home-page hero) — edit them there.
 import type { ResSection } from "./resources";
+import { SYLLABUS } from "./syllabus";
 
 export const paper2Sections: ResSection[] = [
   {
-    // Shows up automatically in the home "Latest & Essentials" list.
     "title": "Syllabus",
     "categories": [
       {
         "label": "Official Syllabus",
         "files": [
-          {
-            "name": "Paper-2 Political Science Syllabus (English)",
-            "url": "https://drive.google.com/file/d/1jz3YLrr4hudvPTDGzI8r16H0Sn38802_/view?usp=drivesdk"
-          },
-          {
-            "name": "Paper-2 Political Science Syllabus (Hindi)",
-            "url": "https://drive.google.com/file/d/1S4rAkjEuAbY0V5uThhJ_k6qpMpf_8AXM/view?usp=drivesdk"
-          }
+          { "name": "Paper-2 Political Science Syllabus (English)", "url": SYLLABUS.paper2.English },
+          { "name": "Paper-2 Political Science Syllabus (Hindi)", "url": SYLLABUS.paper2.Hindi }
         ]
       }
     ]

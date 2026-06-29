@@ -1,25 +1,29 @@
+import { Fragment } from "react";
 import { Mail } from "lucide-react";
-import { SITE } from "../config";
+import { SITE, AUTHOR } from "../config";
 import Reveal from "./Reveal";
 import profile from "../assets/profile.webp";
 
 /**
- * About Author — a compact author byline. A small photo (blended into the
- * background with a soft brand halo) is paired with the name and role, and
- * a short bio spans below to keep the section low and tidy. To change the
- * photo, just replace `src/assets/profile.webp`.
+ * Meet Your Mentor — a compact, premium author card. The name, roles and
+ * bio all come from `AUTHOR` in src/config.ts (edit content there). To
+ * change the photo, replace `src/assets/profile.webp`.
  */
 export default function About() {
   return (
     <section id="about" className="surface-a border-t border-edge">
       <Reveal>
-        <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-10">
+        <div className="mx-auto max-w-2xl px-4 py-9 sm:px-6 sm:py-11">
 
-          <p className="eyebrow text-center">About Author</p>
+          {/* Section heading */}
+          <h2 className="text-center text-xl font-extrabold tracking-tight sm:text-2xl">
+            Meet Your <span className="text-gradient">Mentor</span>
+          </h2>
 
-          <div className="mt-5 sm:mt-6">
+          {/* Author card */}
+          <div className="mt-5 rounded-2xl border border-edge bg-card/70 p-5 shadow-[var(--shadow-card)] backdrop-blur-sm transition-shadow hover:shadow-[var(--shadow-card-hover)] sm:mt-6 sm:p-6">
 
-            {/* ── Identity row: blended photo + name + role ── */}
+            {/* Identity row: blended photo + name + roles */}
             <div className="flex items-center gap-3.5 sm:gap-4">
               <div className="relative shrink-0">
                 <span
@@ -28,7 +32,7 @@ export default function About() {
                 />
                 <img
                   src={profile}
-                  alt="Deepak — Founder & Educator"
+                  alt={`${AUTHOR.name} — Founder & Educator`}
                   loading="lazy"
                   decoding="async"
                   width={240}
@@ -37,32 +41,42 @@ export default function About() {
                 />
               </div>
               <div className="min-w-0">
-                <h2 className="text-xl font-extrabold tracking-tight sm:text-2xl">
-                  <span className="text-gradient">Deepak</span>
-                </h2>
-                <p className="mt-0.5 inline-flex items-center gap-1.5 text-[13px] font-semibold text-muted">
-                  <span className="h-1 w-1 rounded-full bg-brand-2" />
-                  Founder &amp; Educator
+                <h3 className="text-lg font-extrabold tracking-tight sm:text-xl">
+                  <span className="text-gradient">{AUTHOR.name}</span>
+                </h3>
+                <p className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[12.5px] font-semibold text-muted sm:text-[13px]">
+                  {AUTHOR.roles.map((role, i) => (
+                    <Fragment key={role}>
+                      {i > 0 && (
+                        <span aria-hidden="true" className="text-brand-2/70">
+                          •
+                        </span>
+                      )}
+                      {role}
+                    </Fragment>
+                  ))}
                 </p>
               </div>
             </div>
 
-            {/* ── Short bio ── */}
-            <p className="mt-3.5 text-[13px] leading-relaxed text-muted sm:text-sm">
-              UGC-NET/JRF in Political Science (99.826&nbsp;%ile, 2025), with GATE
-              (Economics) &amp; UGC-NET (Geography). Sharing quality notes, mock
-              tests, PYQ analysis &amp; exam strategy — to make JRF prep simpler
-              and smarter.
+            {/* Short bio */}
+            <p className="mt-4 text-[13px] leading-relaxed text-muted sm:text-sm">
+              {AUTHOR.bio}
             </p>
 
-            {/* ── Contact ── */}
-            <a
-              href={`mailto:${SITE.email}`}
-              className="mt-3 inline-flex items-center gap-2 border border-edge bg-card px-3 py-1.5 text-[13px] transition-all hover:border-brand/40 hover:shadow-sm"
-            >
-              <Mail size={14} className="shrink-0 text-brand" />
-              <span className="font-semibold text-fg">{SITE.email}</span>
-            </a>
+            {/* Contact — label shows on tablet/desktop, email always visible */}
+            <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+              <span className="hidden font-mono text-[11px] uppercase tracking-widest text-muted/70 sm:inline">
+                {AUTHOR.contactLabel}
+              </span>
+              <a
+                href={`mailto:${SITE.email}`}
+                className="inline-flex items-center gap-2 rounded-lg border border-edge bg-card px-3 py-1.5 text-[13px] transition-all hover:border-brand/40 hover:shadow-sm active:scale-[0.98]"
+              >
+                <Mail size={14} className="shrink-0 text-brand" />
+                <span className="font-semibold text-fg">{SITE.email}</span>
+              </a>
+            </div>
           </div>
         </div>
       </Reveal>

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import {
-  FileText,
   GraduationCap,
   Languages,
   BookOpen,
@@ -11,6 +10,7 @@ import {
 import { SITE } from "../config";
 import { UPDATES } from "../data/updates";
 import UpdateLink from "./UpdateLink";
+import SyllabusChip from "./SyllabusChip";
 
 const PAPER_1_TOPICS = ["Teaching Aptitude", "Research Methodology", "ICT & Reasoning"];
 const PAPER_2_TOPICS = ["Political Theory", "Indian Government", "International Relations"];
@@ -35,12 +35,13 @@ export default function Hero() {
         className="anim-glow pointer-events-none absolute -left-16 bottom-8 h-64 w-64 rounded-full bg-brand/10 blur-3xl"
       />
 
-      <div className="relative mx-auto max-w-6xl">
-        <div className="flex min-h-[calc(100svh-128px)] flex-col lg:min-h-[calc(100svh-68px)] lg:flex-row">
+      {/* Vertically-centered content fills the first screen; a two-column
+          grid on desktop aligns the updates panel with the exam card. */}
+      <div className="relative mx-auto flex min-h-[calc(100svh-124px)] max-w-6xl flex-col justify-center px-4 py-8 sm:px-6 lg:min-h-[calc(100svh-68px)] lg:py-10">
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-x-10 lg:gap-y-10">
 
-          {/* ── Main hero content ── */}
-          <div className="flex flex-1 flex-col items-center justify-start px-4 py-2 text-center sm:px-10 sm:py-12 lg:justify-center lg:py-14">
-
+          {/* ── Heading block (desktop: col 1 / row 1) ── */}
+          <div className="text-center lg:col-start-1 lg:row-start-1">
             {/* Eyebrow */}
             <span className="anim-hero eyebrow inline-flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-brand-2" />
@@ -48,13 +49,13 @@ export default function Hero() {
             </span>
 
             {/* Heading */}
-            <h1 className="anim-hero anim-d1 mt-2 text-[2rem] font-extrabold leading-[1.05] tracking-tight sm:mt-4 sm:text-6xl sm:leading-[1.08] lg:text-[4.5rem]">
+            <h1 className="anim-hero anim-d1 mt-3 text-[2rem] font-extrabold leading-[1.05] tracking-tight sm:mt-4 sm:text-6xl sm:leading-[1.08] lg:text-[4.25rem]">
               Political Science{" "}
               <span className="text-gradient">Made Simple</span>
             </h1>
 
             {/* Subtitle */}
-            <p className="anim-hero anim-d2 mx-auto mt-1.5 max-w-lg text-[13px] text-muted sm:mt-4 sm:text-base">
+            <p className="anim-hero anim-d2 mx-auto mt-3 max-w-lg text-[13px] text-muted sm:mt-4 sm:text-base">
               <span className="sm:hidden">
                 Notes, PYQs, mock tests &amp; strategy — all in one place.
               </span>
@@ -64,140 +65,154 @@ export default function Hero() {
                 everything you need, in one clean place.
               </span>
             </p>
+          </div>
 
-            {/* ── Grouped exam card: exam tag · Hindi · Papers · Mock series ── */}
-            <div className="anim-hero anim-d3 mx-auto mt-6 w-full max-w-lg rounded-2xl border border-edge bg-card/60 p-2.5 shadow-sm backdrop-blur-sm sm:mt-7 sm:p-4">
+          {/* ── Exam card + upcoming chips (desktop: col 1 / row 2) ── */}
+          <div className="mt-9 sm:mt-11 lg:col-start-1 lg:row-start-2 lg:mt-0">
+            <div className="mx-auto w-full max-w-lg">
 
-              {/* Exam tag + Hindi availability */}
-              <div className="flex flex-col items-center gap-1.5">
-                <span className="inline-flex items-center gap-2.5 rounded-xl border border-edge bg-card px-4 py-1.5 shadow-sm">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg gradient-brand text-white">
-                    <GraduationCap size={15} />
+              {/* Grouped exam card: exam tag · Hindi · Papers · Mock series */}
+              <div className="anim-hero anim-d3 rounded-2xl border border-edge bg-card/60 p-3 shadow-sm backdrop-blur-sm sm:p-4">
+
+                {/* Exam tag + Hindi availability */}
+                <div className="flex flex-col items-center gap-2">
+                  <span className="inline-flex items-center gap-2.5 rounded-xl border border-edge bg-card px-4 py-1.5 shadow-sm">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg gradient-brand text-white">
+                      <GraduationCap size={15} />
+                    </span>
+                    <span className="text-sm font-bold text-fg sm:text-[15px]">
+                      {SITE.examLabel}
+                    </span>
                   </span>
-                  <span className="text-sm font-bold text-fg sm:text-[15px]">
-                    {SITE.examLabel}
+
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-2/35 bg-brand-2/10 px-3 py-1 text-[12px] font-semibold text-fg sm:text-[13px]">
+                    <Languages size={13} className="text-brand-2" />
+                    Also available in{" "}
+                    <span className="font-bold text-brand-2">हिंदी</span>
                   </span>
-                </span>
+                </div>
 
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-2/35 bg-brand-2/10 px-3 py-1 text-[12px] font-semibold text-fg sm:text-[13px]">
-                  <Languages size={13} className="text-brand-2" />
-                  Also available in{" "}
-                  <span className="font-bold text-brand-2">हिंदी</span>
-                </span>
-              </div>
+                {/* Paper cards — whole card links; a Syllabus chip sits in the corner */}
+                <div className="mt-3 grid grid-cols-2 gap-2.5 sm:mt-4 sm:gap-3">
 
-              {/* Paper cards — always 2 columns, full card is a link */}
-              <div className="mt-2.5 grid grid-cols-2 gap-2.5 sm:mt-4 sm:gap-3">
-
-                {/* Paper 1 */}
-                <Link
-                  to="/paper-1"
-                  className="hero-card hero-card-p1 card flex flex-col bg-bg p-3 text-left sm:p-4"
-                >
-                  <div className="flex items-start justify-between">
-                    <span className="eyebrow text-[9px] sm:text-[10px]">Paper 1</span>
-                    <FileText size={12} className="mt-0.5 shrink-0 text-muted/50" />
+                  {/* Paper 1 */}
+                  <div className="hero-card hero-card-p1 card relative flex flex-col bg-bg p-3 text-left sm:p-4">
+                    <Link
+                      to="/paper-1"
+                      aria-label="Open Paper 1 — General materials"
+                      className="absolute inset-0"
+                    />
+                    <div className="flex items-center justify-between gap-1.5">
+                      <span className="eyebrow shrink-0 whitespace-nowrap text-[9px] tracking-[0.12em] sm:text-[10px]">Paper 1</span>
+                      <SyllabusChip paper="paper1" label="Paper 1" />
+                    </div>
+                    <h3 className="mt-1.5 text-[15px] font-extrabold sm:mt-2 sm:text-lg">
+                      General
+                    </h3>
+                    <ul className="mt-2 flex-1 space-y-1 sm:space-y-2">
+                      {PAPER_1_TOPICS.map((t) => (
+                        <li
+                          key={t}
+                          className="flex items-start gap-1.5 text-[10px] leading-snug text-muted sm:text-[13px]"
+                        >
+                          <span className="mt-[4px] h-1 w-1 shrink-0 rounded-full bg-brand sm:mt-[5px] sm:h-1.5 sm:w-1.5" />
+                          {t}
+                        </li>
+                      ))}
+                    </ul>
+                    <span
+                      className="mt-2.5 flex items-center justify-center rounded-lg py-2 text-[11px] font-semibold text-white sm:text-sm"
+                      style={{ backgroundColor: "rgb(var(--blue))" }}
+                    >
+                      Open &rsaquo;
+                    </span>
                   </div>
-                  <h3 className="mt-1.5 text-[15px] font-extrabold sm:mt-2 sm:text-lg">
-                    General
-                  </h3>
-                  <ul className="mt-2 flex-1 space-y-1 sm:space-y-2">
-                    {PAPER_1_TOPICS.map((t) => (
-                      <li
-                        key={t}
-                        className="flex items-start gap-1.5 text-[10px] leading-snug text-muted sm:text-[13px]"
-                      >
-                        <span className="mt-[4px] h-1 w-1 shrink-0 rounded-full bg-brand sm:mt-[5px] sm:h-1.5 sm:w-1.5" />
-                        {t}
-                      </li>
-                    ))}
-                  </ul>
-                  <span
-                    className="mt-2.5 flex items-center justify-center rounded-lg py-2 text-[11px] font-semibold text-white sm:text-sm"
-                    style={{ backgroundColor: "rgb(var(--blue))" }}
-                  >
-                    Open &rsaquo;
-                  </span>
-                </Link>
 
-                {/* Paper 2 */}
-                <Link
-                  to="/paper-2"
-                  className="hero-card hero-card-p2 card flex flex-col bg-bg p-3 text-left sm:p-4"
-                >
-                  <div className="flex items-start justify-between">
-                    <span className="eyebrow text-[9px] sm:text-[10px]">Paper 2</span>
-                    <FileText size={12} className="mt-0.5 shrink-0 text-muted/50" />
+                  {/* Paper 2 */}
+                  <div className="hero-card hero-card-p2 card relative flex flex-col bg-bg p-3 text-left sm:p-4">
+                    <Link
+                      to="/paper-2"
+                      aria-label="Open Paper 2 — Political Science materials"
+                      className="absolute inset-0"
+                    />
+                    <div className="flex items-center justify-between gap-1.5">
+                      <span className="eyebrow shrink-0 whitespace-nowrap text-[9px] tracking-[0.12em] sm:text-[10px]">Paper 2</span>
+                      <SyllabusChip paper="paper2" label="Paper 2" />
+                    </div>
+                    <h3 className="mt-1.5 text-[15px] font-extrabold sm:mt-2 sm:text-lg">
+                      Political Science
+                    </h3>
+                    <ul className="mt-2 flex-1 space-y-1 sm:space-y-2">
+                      {PAPER_2_TOPICS.map((t) => (
+                        <li
+                          key={t}
+                          className="flex items-start gap-1.5 text-[10px] leading-snug text-muted sm:text-[13px]"
+                        >
+                          <span className="mt-[4px] h-1 w-1 shrink-0 rounded-full bg-brand-2 sm:mt-[5px] sm:h-1.5 sm:w-1.5" />
+                          {t}
+                        </li>
+                      ))}
+                    </ul>
+                    <span
+                      className="mt-2.5 flex items-center justify-center rounded-lg py-2 text-[11px] font-semibold text-white sm:text-sm"
+                      style={{ backgroundColor: "rgb(var(--green))" }}
+                    >
+                      Open &rsaquo;
+                    </span>
                   </div>
-                  <h3 className="mt-1.5 text-[15px] font-extrabold sm:mt-2 sm:text-lg">
-                    Political Science
-                  </h3>
-                  <ul className="mt-2 flex-1 space-y-1 sm:space-y-2">
-                    {PAPER_2_TOPICS.map((t) => (
-                      <li
-                        key={t}
-                        className="flex items-start gap-1.5 text-[10px] leading-snug text-muted sm:text-[13px]"
-                      >
-                        <span className="mt-[4px] h-1 w-1 shrink-0 rounded-full bg-brand-2 sm:mt-[5px] sm:h-1.5 sm:w-1.5" />
-                        {t}
-                      </li>
-                    ))}
-                  </ul>
-                  <span
-                    className="mt-2.5 flex items-center justify-center rounded-lg py-2 text-[11px] font-semibold text-white sm:text-sm"
-                    style={{ backgroundColor: "rgb(var(--green))" }}
-                  >
-                    Open &rsaquo;
-                  </span>
+                </div>
+
+                {/* Mock tests — slim full-width call to action */}
+                <Link
+                  to="/mock-tests"
+                  className="group mt-2.5 flex w-full items-center justify-center gap-2 rounded-lg gradient-brand px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform active:scale-[0.98] sm:mt-3 sm:py-2.5"
+                >
+                  <ClipboardList size={15} />
+                  Mock Test Series 2026
+                  <span className="transition-transform group-hover:translate-x-0.5">→</span>
                 </Link>
               </div>
 
-              {/* Mock tests — slim full-width call to action */}
-              <Link
-                to="/mock-tests"
-                className="group mt-2 flex w-full items-center justify-center gap-2 rounded-lg gradient-brand px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform active:scale-[0.98] sm:mt-3 sm:py-2.5"
-              >
-                <ClipboardList size={15} />
-                Mock Test Series 2026
-                <span className="transition-transform group-hover:translate-x-0.5">→</span>
-              </Link>
-            </div>
-
-            {/* ── Upcoming exams — kept visible at the bottom of the first screen ── */}
-            <div className="anim-hero anim-d4 mx-auto mt-3 grid w-full max-w-lg grid-cols-2 gap-2 sm:mt-6 sm:gap-3">
-              <div className="hero-chip hero-chip-cuet flex min-w-0 items-center gap-1.5 rounded-lg border border-edge bg-card px-2.5 py-2 sm:gap-2.5 sm:px-4 sm:py-3">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-brand-2/15 text-brand-2 sm:h-7 sm:w-7">
-                  <BookOpen size={12} />
-                </span>
-                <span className="min-w-0 truncate text-[11px] font-semibold text-fg/80 sm:text-sm">CUET-PG</span>
-                <span className="shrink-0 rounded bg-fg/10 px-1 py-px font-mono text-[7px] uppercase tracking-wider text-fg/50 sm:px-1.5 sm:py-0.5 sm:text-[8px]">
-                  Upcoming
-                </span>
-              </div>
-              <div className="hero-chip hero-chip-rset flex min-w-0 items-center gap-1.5 rounded-lg border border-edge bg-card px-2.5 py-2 sm:gap-2.5 sm:px-4 sm:py-3">
-                <span
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md sm:h-7 sm:w-7"
-                  style={{ backgroundColor: "rgb(245 158 11 / 0.12)", color: "rgb(217 119 6)" }}
-                >
-                  <Landmark size={12} />
-                </span>
-                <span className="min-w-0 truncate text-[11px] font-semibold text-fg/80 sm:text-sm">SET Rajasthan</span>
-                <span className="shrink-0 rounded bg-fg/10 px-1 py-px font-mono text-[7px] uppercase tracking-wider text-fg/50 sm:px-1.5 sm:py-0.5 sm:text-[8px]">
-                  Upcoming
-                </span>
+              {/* ── Upcoming exams ── */}
+              <div className="anim-hero anim-d4 mt-4 grid grid-cols-2 gap-2.5 sm:mt-5 sm:gap-3">
+                <div className="hero-chip hero-chip-cuet flex min-w-0 items-center gap-1.5 rounded-lg border border-edge bg-card px-2.5 py-2 sm:gap-2.5 sm:px-4 sm:py-3">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-brand-2/15 text-brand-2 sm:h-7 sm:w-7">
+                    <BookOpen size={12} />
+                  </span>
+                  <span className="min-w-0 flex-1 truncate text-[11px] font-semibold text-fg/80 sm:text-sm">CUET-PG</span>
+                  <span className="hidden shrink-0 rounded bg-fg/10 px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-wider text-fg/50 sm:inline-block">
+                    Upcoming
+                  </span>
+                </div>
+                <div className="hero-chip hero-chip-rset flex min-w-0 items-center gap-1.5 rounded-lg border border-edge bg-card px-2.5 py-2 sm:gap-2.5 sm:px-4 sm:py-3">
+                  <span
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md sm:h-7 sm:w-7"
+                    style={{ backgroundColor: "rgb(245 158 11 / 0.12)", color: "rgb(217 119 6)" }}
+                  >
+                    <Landmark size={12} />
+                  </span>
+                  {/* Responsive label: "SET Rajasthan" on mobile, "Rajasthan SET" on ≥sm */}
+                  <span className="min-w-0 flex-1 truncate text-[11px] font-semibold text-fg/80 sm:text-sm">
+                    <span className="sm:hidden">SET Rajasthan</span>
+                    <span className="hidden sm:inline">Rajasthan SET</span>
+                  </span>
+                  <span className="hidden shrink-0 rounded bg-fg/10 px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-wider text-fg/50 sm:inline-block">
+                    Upcoming
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* ── Desktop updates panel (RIGHT) — full-height, blends with the
-              hero background (no plain card), list fills vertically ── */}
-          <aside className="hidden w-64 shrink-0 border-l border-edge bg-bg/20 backdrop-blur-[1px] lg:flex xl:w-72">
-            <div className="flex flex-1 flex-col px-5 py-10 xl:px-6">
+          {/* ── Desktop updates panel (col 2 / row 2) — premium card that
+              aligns with the exam card and runs to the chips' level ── */}
+          <aside className="hidden lg:col-start-2 lg:row-start-2 lg:block">
+            <div className="anim-hero anim-d4 flex h-full flex-col rounded-2xl border border-edge bg-card/70 p-5 shadow-[var(--shadow-card)] backdrop-blur-sm">
 
               {/* Header with View All */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center gradient-brand text-white">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md gradient-brand text-white">
                     <Zap size={10} fill="currentColor" />
                   </span>
                   <p className="eyebrow text-[11px]">Latest Updates</p>
@@ -214,19 +229,19 @@ export default function Hero() {
               <span className="mt-3 block h-px bg-edge" />
 
               {/* All updates — fill the available height, each clickable */}
-              <div className="mt-4 flex-1 space-y-4 overflow-y-auto pr-1">
+              <div className="mt-2 flex-1 space-y-0.5 overflow-y-auto pr-0.5">
                 {UPDATES.map((update) => (
                   <UpdateLink
                     key={update.id}
                     update={update}
-                    className="group flex items-center gap-2.5"
+                    className="group flex items-center gap-2.5 rounded-lg px-2 py-2 transition-colors hover:bg-fg/[0.04]"
                   >
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-2" />
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-2 transition-transform group-hover:scale-125" />
                     <span className="min-w-0 flex-1 truncate text-xs text-muted transition-colors group-hover:text-fg">
                       {update.short ?? update.text}
                     </span>
                     {update.isNew && (
-                      <span className="shrink-0 bg-brand-2 px-1 py-px text-[8px] font-bold uppercase text-white">
+                      <span className="shrink-0 rounded bg-brand-2 px-1 py-px text-[8px] font-bold uppercase text-white">
                         New
                       </span>
                     )}
@@ -237,7 +252,7 @@ export default function Hero() {
               {/* See all — pinned to the bottom of the panel */}
               <Link
                 to="/updates"
-                className="mt-4 flex items-center justify-center gap-1.5 border-t border-edge pt-3 text-[11px] font-medium text-muted transition-colors hover:text-fg"
+                className="mt-2 flex items-center justify-center gap-1.5 border-t border-edge pt-3 text-[11px] font-medium text-muted transition-colors hover:text-fg"
               >
                 <Zap size={9} className="text-brand-2" />
                 See all announcements →

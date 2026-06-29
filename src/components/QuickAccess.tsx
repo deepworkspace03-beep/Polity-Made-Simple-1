@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { quickAccess } from "../data/quickAccess";
+import Reveal from "./Reveal";
 
 /**
  * Quick-access tiles — the primary entry point into the study material.
@@ -20,7 +21,7 @@ export default function QuickAccess({
 
   return (
     <section className="surface-a border-b border-edge">
-      <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-12">
+      <Reveal className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-12">
 
         {/* Heading */}
         <h2 className="flex items-center justify-center gap-2 text-center text-2xl font-extrabold tracking-tight sm:text-3xl">
@@ -79,7 +80,7 @@ export default function QuickAccess({
             );
           })}
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

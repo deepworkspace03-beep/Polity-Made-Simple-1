@@ -70,9 +70,10 @@ export const library: LibraryItem[] = [
 ];
 
 // Real, browsable categories (shown as active filter chips).
+// Note: the official Syllabus is accessed from the hero Paper cards
+// (language picker), so it is intentionally not a filter chip here.
 export const REAL_TYPES: MatType[] = [
   "Handwritten Notes",
   "Printed Notes",
   "Detailed PYQ Solutions",
-  "Syllabus",
 ];

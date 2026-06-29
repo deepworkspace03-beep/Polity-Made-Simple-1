@@ -20,7 +20,9 @@ function PaperBadge({ paper }: { paper: LibraryItem["paper"] }) {
       ? "bg-brand/10 text-brand"
       : "bg-brand-2/10 text-brand-2";
   return (
-    <span className={`px-1.5 py-0.5 text-[11px] font-semibold ${tone}`}>
+    <span
+      className={`shrink-0 whitespace-nowrap rounded px-1.5 py-0.5 text-[11px] font-semibold ${tone}`}
+    >
       {paper}
     </span>
   );
@@ -63,9 +65,10 @@ export default function MaterialsBrowser({
     if (hasFilter) setRevealed(true);
   }, [hasFilter]);
 
-  const base = hasFilter
-    ? library
-    : library.filter((i) => i.isNew || i.type === "Syllabus");
+  // The syllabus now lives on the hero Paper cards, so it is excluded from
+  // the browser entirely. Default view = the newest essentials.
+  const browsable = library.filter((i) => i.type !== "Syllabus");
+  const base = hasFilter ? browsable : browsable.filter((i) => i.isNew);
 
   const results = base
     .filter(
@@ -156,10 +159,14 @@ export default function MaterialsBrowser({
           </>
         ) : (
           /* ── Default: Latest & Essentials ── */
-          <div className="mb-5">
-            <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+          <div className="mb-6">
+            <p className="eyebrow">Fresh on the shelf</p>
+            <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight sm:text-3xl">
               Latest &amp; Essentials
             </h2>
+            <p className="mt-1.5 text-sm text-muted">
+              The newest solutions and must-have material — use Quick Access above to filter everything.
+            </p>
           </div>
         )}
 

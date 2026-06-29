@@ -118,20 +118,24 @@
     @apply inline-flex items-center justify-center gap-2 border border-edge bg-card px-4 py-2.5 text-sm font-semibold text-fg transition-transform hover:bg-fg/5 active:scale-[0.97];
   }
 
-  /* Soft, premium section surfaces — subtle blue/teal tint (never flat
-     white in light, clearer elevation in dark). -a sits on the base
-     background, -b on the alternating band. */
+  /* Soft, premium section surfaces — a layered, eye-friendly background
+     inspired by (but distinct from) the hero: gentle corner glows plus a
+     faint "light from above" sheen so sections read as elevated panels,
+     never flat white. Pure CSS gradients → zero runtime cost, no CLS.
+     -a sits on the base background, -b on the alternating band. */
   .surface-a {
     background-color: rgb(var(--bg));
     background-image:
-      radial-gradient(42rem 22rem at 50% -12%, rgb(var(--brand) / 0.06), transparent 60%),
-      linear-gradient(180deg, transparent 58%, rgb(var(--brand-2) / 0.05));
+      radial-gradient(46rem 26rem at 50% -12%, rgb(var(--brand) / 0.07), transparent 62%),
+      radial-gradient(40rem 24rem at 0% 108%, rgb(var(--brand-2) / 0.06), transparent 60%),
+      linear-gradient(180deg, rgb(var(--card) / 0.45), transparent 34%);
   }
   .surface-b {
     background-color: rgb(var(--band));
     background-image:
-      radial-gradient(40rem 22rem at 100% 0%, rgb(var(--brand-2) / 0.07), transparent 56%),
-      radial-gradient(38rem 20rem at 0% 100%, rgb(var(--brand) / 0.05), transparent 56%);
+      radial-gradient(44rem 26rem at 100% -8%, rgb(var(--brand-2) / 0.08), transparent 58%),
+      radial-gradient(42rem 24rem at 0% 110%, rgb(var(--brand) / 0.06), transparent 58%),
+      linear-gradient(180deg, rgb(var(--card) / 0.40), transparent 30%);
   }
 
   /* Cards — sharp rectangle with a faint top sheen + soft elevation. */
@@ -181,6 +185,13 @@
 }
 .animate-toast { animation: toastIn 0.25s ease-out both; }
 
+/* ── Popover (syllabus language picker) ── */
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.96) translateY(-3px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.anim-pop { animation: popIn 0.14s ease-out both; }
+
 /* ──────────────────────────────────────────────────────────
    HERO ANIMATIONS
    ────────────────────────────────────────────────────────── */
@@ -225,7 +236,7 @@
 @media (prefers-reduced-motion: reduce) {
   .reveal, .anim-hero { opacity: 1; transform: none; transition: none; animation: none; }
   .anim-float, .anim-glow, .anim-glow-slow { animation: none; }
-  .animate-marquee { animation: none; }
+  .animate-marquee, .anim-pop { animation: none; }
   html { scroll-behavior: auto; }
 }
 
