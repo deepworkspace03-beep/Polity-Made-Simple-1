@@ -6,9 +6,11 @@ import QuickAccess from "../components/QuickAccess";
 import MaterialsBrowser from "../components/MaterialsBrowser";
 import About from "../components/About";
 import Toast from "../components/Toast";
-import { UPDATES } from "../data/updates";
+import { UPDATES, isUpdateNew } from "../data/updates";
+import NewBadge from "../components/NewBadge";
 
-const tickerText = UPDATES.map((u) => u.text).join("   ·   ");
+// The 3 most recent updates, shown in the compact mobile box.
+const RECENT_UPDATES = UPDATES.slice(0, 3);
 
 export default function Home() {
   const [types, setTypes] = useState<string[]>([]);
@@ -37,26 +39,44 @@ export default function Home() {
 
   return (
     <>
-      {/* Mobile updates ticker — sticky below header, clickable, hidden on lg+ */}
-      <Link
-        to="/updates"
-        className="sticky top-16 z-30 block overflow-hidden border-b border-edge bg-band/95 backdrop-blur-sm lg:hidden"
-      >
-        <div className="flex items-center gap-3 px-4 py-2">
-          <span className="inline-flex shrink-0 items-center gap-1 bg-brand px-2 py-[5px] font-mono text-[9px] font-bold uppercase tracking-widest text-white">
-            <Zap size={8} fill="currentColor" />
-            Updates
-          </span>
-          <div className="overflow-hidden flex-1">
-            <p className="animate-marquee whitespace-nowrap text-[11px] text-muted">
-              {tickerText}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{tickerText}
-            </p>
+      {/* Mobile latest-updates box — fixed (non-scrolling), readable, hidden on lg+ */}
+      <section className="border-b border-edge bg-band lg:hidden">
+        <div className="mx-auto max-w-6xl px-4 py-3.5">
+          {/* Header row */}
+          <div className="mb-2.5 flex items-center justify-between">
+            <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-fg">
+              <span className="flex h-5 w-5 items-center justify-center gradient-brand text-white">
+                <Zap size={10} fill="currentColor" />
+              </span>
+              Latest Updates
+            </span>
+            <Link
+              to="/updates"
+              className="font-mono text-[10px] font-medium uppercase tracking-wider text-brand active:opacity-70"
+            >
+              View all →
+            </Link>
           </div>
-          <span className="shrink-0 font-mono text-[9px] uppercase tracking-wider text-brand">
-            View All →
-          </span>
+
+          {/* 2–3 most recent updates, each on its own line */}
+          <ul className="space-y-2">
+            {RECENT_UPDATES.map((u) => (
+              <li key={u.id}>
+                <Link
+                  to={u.href ?? "/updates"}
+                  className="flex items-start gap-2.5 py-0.5 active:opacity-70"
+                >
+                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-2" />
+                  <span className="min-w-0 flex-1 text-[13px] leading-snug text-fg/85 line-clamp-2">
+                    {u.text}
+                  </span>
+                  {isUpdateNew(u) && <NewBadge className="mt-px" />}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
-      </Link>
+      </section>
 
       <Hero />
       <QuickAccess onPick={handlePick} onComingSoon={setToast} />

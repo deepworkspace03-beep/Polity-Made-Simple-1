@@ -19,8 +19,10 @@
 //  HOW TO ADD A GOOGLE DRIVE LINK:
 //    Add   driveUrl: "https://drive.google.com/..."   inside the { }.
 //
-//  HOW TO ADD A "NEW" BADGE:
-//    Add   isNew: true   inside the { }.
+//  HOW THE RED "NEW" BADGE WORKS:
+//    AUTOMATIC — add   publishedAt: "2026-06-28"   (a real YYYY-MM-DD date).
+//    The badge shows on its own for 48 hours, then disappears automatically.
+//    MANUAL    — add   isNew: true   to force the badge on (no auto-expiry).
 //
 //  HOW TO REMOVE AN UPDATE:
 //    Delete the entire line for that update (the { ... }, line).
@@ -33,16 +35,36 @@ export type Update = {
   text: string;
   href?: string;  // optional — page to open when clicked
   driveUrl?: string; // optional — Google Drive link
-  isNew?: boolean; // optional — show NEW badge
+  publishedAt?: string; // optional — YYYY-MM-DD; auto-shows NEW badge for 48h
+  isNew?: boolean; // optional — force NEW badge on (manual override)
   date?: string;  // optional — display date e.g. "Jun 2026"
 };
+
+// 48 hours in milliseconds.
+const NEW_WINDOW_MS = 48 * 60 * 60 * 1000;
+
+/**
+ * Whether an update should show the red "NEW" badge.
+ * Automatic when `publishedAt` falls within the last 48 hours;
+ * `isNew: true` is a manual override that never expires.
+ */
+export function isUpdateNew(update: Update): boolean {
+  if (update.publishedAt) {
+    const published = new Date(update.publishedAt).getTime();
+    if (!Number.isNaN(published)) {
+      const age = Date.now() - published;
+      return age >= 0 && age <= NEW_WINDOW_MS;
+    }
+  }
+  return update.isNew === true;
+}
 
 export const UPDATES: Update[] = [
   {
     id: 6,
     text: "UGC-NET June-2026 Pol Sci memory recalled Paper",
     driveUrl: "https://drive.google.com/file/d/1BigZ06D3TwdQIo252ZhS3gPcM2mTFGeh/view?usp=drivesdk",
-    isNew: true,
+    publishedAt: "2026-06-28",
     date: "28 Jun 2026",
   },
   {

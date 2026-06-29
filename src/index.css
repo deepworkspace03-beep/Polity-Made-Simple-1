@@ -120,18 +120,6 @@
 .sidebar-enter         { transform: translateX(100%); }
 .sidebar-enter-active  { transform: translateX(0); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); }
 
-/* ── Marquee ticker ── */
-@keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.animate-marquee {
-  display: inline-block;
-  animation: marquee 32s linear infinite;
-  will-change: transform;
-}
-.animate-marquee:hover { animation-play-state: paused; }
-
 /* ── Toast ── */
 @keyframes toastIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -183,7 +171,6 @@
 @media (prefers-reduced-motion: reduce) {
   .reveal, .anim-hero { opacity: 1; transform: none; transition: none; animation: none; }
   .anim-float, .anim-glow, .anim-glow-slow { animation: none; }
-  .animate-marquee { animation: none; }
   html { scroll-behavior: auto; }
 }
 
@@ -244,3 +231,13 @@
   border-color: rgb(245 158 11 / 0.55);
 }
 .hero-chip-rset:active { transform: scale(0.97); }
+
+/* Mock Tests CTA — brand gradient button inside the hero box */
+.hero-mock {
+  transition: filter 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+.hero-mock:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 10px 24px rgb(var(--brand) / 0.28);
+}
+.hero-mock:active { transform: scale(0.985); }

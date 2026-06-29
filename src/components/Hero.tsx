@@ -6,9 +6,21 @@ import {
   BookOpen,
   Landmark,
   Zap,
+  ClipboardList,
+  ArrowRight,
 } from "lucide-react";
 import { SITE } from "../config";
-import { UPDATES } from "../data/updates";
+import { UPDATES, isUpdateNew } from "../data/updates";
+import NewBadge from "./NewBadge";
+
+// Small muted-amber "Upcoming" tag — visible in both light & dark modes.
+function UpcomingTag() {
+  return (
+    <span className="shrink-0 rounded-sm bg-amber-400/20 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none tracking-wide text-amber-600 dark:text-amber-400">
+      Upcoming
+    </span>
+  );
+}
 
 const PAPER_1_TOPICS = ["Teaching Aptitude", "Research Methodology", "ICT & Reasoning"];
 const PAPER_2_TOPICS = ["Political Theory", "Indian Government", "International Relations"];
@@ -58,112 +70,124 @@ export default function Hero() {
               everything you need, in one clean place.
             </p>
 
-            {/* Exam badge — fades in then floats */}
-            <div className="anim-hero anim-d3 mt-8 flex justify-center">
-              <div className="anim-float inline-flex items-center gap-3 border border-edge bg-card px-5 py-3 shadow-md">
+            {/* ── Single layout box: exam + papers + language + mock tests ── */}
+            <div className="anim-hero anim-d3 mx-auto mt-8 w-full max-w-lg border border-edge bg-band p-4 shadow-md sm:p-6">
+
+              {/* Exam heading */}
+              <div className="flex items-center justify-center gap-2.5">
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center gradient-brand text-white">
                   <GraduationCap size={16} />
                 </span>
-                <span className="text-sm font-bold text-fg sm:text-[15px]">
+                <h2 className="text-base font-extrabold tracking-tight text-fg sm:text-lg">
                   {SITE.examLabel}
-                </span>
+                </h2>
               </div>
+
+              {/* Paper cards — always 2 columns, full card is a link */}
+              <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-4">
+
+                {/* Paper 1 — whole card navigates */}
+                <Link
+                  to="/paper-1"
+                  className="hero-card hero-card-p1 card flex flex-col p-3 text-left sm:p-4"
+                >
+                  <div className="flex items-start justify-between">
+                    <span className="eyebrow text-[9px] sm:text-[10px]">Paper 1</span>
+                    <FileText size={12} className="mt-0.5 shrink-0 text-muted/50" />
+                  </div>
+                  <h3 className="mt-1.5 text-[15px] font-extrabold sm:mt-2 sm:text-xl">
+                    General
+                  </h3>
+                  <ul className="mt-2 flex-1 space-y-1.5 sm:mt-3 sm:space-y-2">
+                    {PAPER_1_TOPICS.map((t) => (
+                      <li
+                        key={t}
+                        className="flex items-start gap-1.5 text-[10px] leading-snug text-muted sm:text-sm"
+                      >
+                        <span className="mt-[4px] h-1 w-1 shrink-0 rounded-full bg-brand sm:mt-[5px] sm:h-1.5 sm:w-1.5" />
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                  <span
+                    className="mt-3 flex items-center justify-center py-2 text-[11px] font-semibold text-white sm:mt-4 sm:py-2.5 sm:text-sm"
+                    style={{ backgroundColor: "rgb(var(--blue))" }}
+                  >
+                    Open &rsaquo;
+                  </span>
+                </Link>
+
+                {/* Paper 2 — whole card navigates */}
+                <Link
+                  to="/paper-2"
+                  className="hero-card hero-card-p2 card flex flex-col p-3 text-left sm:p-4"
+                >
+                  <div className="flex items-start justify-between">
+                    <span className="eyebrow text-[9px] sm:text-[10px]">Paper 2</span>
+                    <FileText size={12} className="mt-0.5 shrink-0 text-muted/50" />
+                  </div>
+                  <h3 className="mt-1.5 text-[15px] font-extrabold sm:mt-2 sm:text-xl">
+                    Political Science
+                  </h3>
+                  <ul className="mt-2 flex-1 space-y-1.5 sm:mt-3 sm:space-y-2">
+                    {PAPER_2_TOPICS.map((t) => (
+                      <li
+                        key={t}
+                        className="flex items-start gap-1.5 text-[10px] leading-snug text-muted sm:text-sm"
+                      >
+                        <span className="mt-[4px] h-1 w-1 shrink-0 rounded-full bg-brand-2 sm:mt-[5px] sm:h-1.5 sm:w-1.5" />
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                  <span
+                    className="mt-3 flex items-center justify-center py-2 text-[11px] font-semibold text-white sm:mt-4 sm:py-2.5 sm:text-sm"
+                    style={{ backgroundColor: "rgb(var(--green))" }}
+                  >
+                    Open &rsaquo;
+                  </span>
+                </Link>
+              </div>
+
+              {/* Language note */}
+              <p className="mt-4 flex items-center justify-center gap-1.5 text-xs font-medium text-fg/60 sm:text-sm">
+                <Languages size={13} />
+                Available in both English + हिंदी
+              </p>
+
+              {/* Mock Tests 2026 — opens the full, organized mock-test library */}
+              <Link
+                to="/mock-tests"
+                className="hero-mock group mt-4 flex items-center justify-center gap-2 gradient-brand py-3 text-sm font-bold text-white sm:text-[15px]"
+              >
+                <ClipboardList size={16} />
+                Mock Tests 2026
+                <ArrowRight
+                  size={15}
+                  className="transition-transform group-hover:translate-x-0.5"
+                />
+              </Link>
             </div>
 
-            {/* Paper cards — always 2 columns, full card is a link */}
-            <div className="anim-hero anim-d4 mx-auto mt-8 grid w-full max-w-lg grid-cols-2 gap-3 sm:gap-4">
-
-              {/* Paper 1 — whole card navigates */}
-              <Link
-                to="/paper-1"
-                className="hero-card hero-card-p1 card flex flex-col p-3 text-left sm:p-5"
-              >
-                <div className="flex items-start justify-between">
-                  <span className="eyebrow text-[9px] sm:text-[10px]">Paper 1</span>
-                  <FileText size={12} className="mt-0.5 shrink-0 text-muted/50" />
-                </div>
-                <h3 className="mt-1.5 text-[15px] font-extrabold sm:mt-2 sm:text-xl">
-                  General
-                </h3>
-                <ul className="mt-2 flex-1 space-y-1.5 sm:mt-3 sm:space-y-2">
-                  {PAPER_1_TOPICS.map((t) => (
-                    <li
-                      key={t}
-                      className="flex items-start gap-1.5 text-[10px] leading-snug text-muted sm:text-sm"
-                    >
-                      <span className="mt-[4px] h-1 w-1 shrink-0 rounded-full bg-brand sm:mt-[5px] sm:h-1.5 sm:w-1.5" />
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-                <span
-                  className="mt-3 flex items-center justify-center py-2 text-[11px] font-semibold text-white sm:mt-4 sm:py-2.5 sm:text-sm"
-                  style={{ backgroundColor: "rgb(var(--blue))" }}
-                >
-                  Open &rsaquo;
-                </span>
-              </Link>
-
-              {/* Paper 2 — whole card navigates */}
-              <Link
-                to="/paper-2"
-                className="hero-card hero-card-p2 card flex flex-col p-3 text-left sm:p-5"
-              >
-                <div className="flex items-start justify-between">
-                  <span className="eyebrow text-[9px] sm:text-[10px]">Paper 2</span>
-                  <FileText size={12} className="mt-0.5 shrink-0 text-muted/50" />
-                </div>
-                <h3 className="mt-1.5 text-[15px] font-extrabold sm:mt-2 sm:text-xl">
-                  Political Science
-                </h3>
-                <ul className="mt-2 flex-1 space-y-1.5 sm:mt-3 sm:space-y-2">
-                  {PAPER_2_TOPICS.map((t) => (
-                    <li
-                      key={t}
-                      className="flex items-start gap-1.5 text-[10px] leading-snug text-muted sm:text-sm"
-                    >
-                      <span className="mt-[4px] h-1 w-1 shrink-0 rounded-full bg-brand-2 sm:mt-[5px] sm:h-1.5 sm:w-1.5" />
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-                <span
-                  className="mt-3 flex items-center justify-center py-2 text-[11px] font-semibold text-white sm:mt-4 sm:py-2.5 sm:text-sm"
-                  style={{ backgroundColor: "rgb(var(--green))" }}
-                >
-                  Open &rsaquo;
-                </span>
-              </Link>
-            </div>
-
-            {/* Language note */}
-            <p className="anim-hero anim-d5 mt-5 inline-flex items-center justify-center gap-1.5 text-xs font-medium text-fg/60 sm:text-sm">
-              <Languages size={13} />
-              Available in both English + हिंदी
-            </p>
-
-            {/* Upcoming chips — always 2-column grid, responsive sizing */}
-            <div className="anim-hero anim-d6 mx-auto mt-7 grid w-full max-w-lg grid-cols-2 gap-2 sm:gap-3">
-              <div className="hero-chip hero-chip-cuet flex min-w-0 items-center gap-1.5 border border-edge bg-card px-2.5 py-2.5 sm:gap-2.5 sm:px-4 sm:py-3">
+            {/* ── Upcoming exams — separated from the box above by spacing only.
+                 Stacked full-width rows so the full name stays readable on every screen. ── */}
+            <div className="anim-hero anim-d4 mx-auto mt-6 grid w-full max-w-lg grid-cols-1 gap-2.5">
+              <div className="hero-chip hero-chip-cuet flex min-w-0 items-center gap-2 border border-edge bg-card px-3 py-2.5 sm:gap-2.5 sm:px-4 sm:py-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center bg-brand-2/15 text-brand-2 sm:h-7 sm:w-7">
                   <BookOpen size={12} />
                 </span>
-                <span className="min-w-0 truncate text-xs font-semibold text-fg/80 sm:text-sm">CUET-PG</span>
-                <span className="shrink-0 bg-fg/10 px-1 py-px font-mono text-[7px] uppercase tracking-wider text-fg/50 sm:px-1.5 sm:py-0.5 sm:text-[8px]">
-                  Upcoming
-                </span>
+                <span className="min-w-0 flex-1 truncate text-left text-[13px] font-semibold text-fg/80 sm:text-sm">CUET-PG</span>
+                <UpcomingTag />
               </div>
-              <div className="hero-chip hero-chip-rset flex min-w-0 items-center gap-1.5 border border-edge bg-card px-2.5 py-2.5 sm:gap-2.5 sm:px-4 sm:py-3">
+              <div className="hero-chip hero-chip-rset flex min-w-0 items-center gap-2 border border-edge bg-card px-3 py-2.5 sm:gap-2.5 sm:px-4 sm:py-3">
                 <span
                   className="flex h-6 w-6 shrink-0 items-center justify-center sm:h-7 sm:w-7"
                   style={{ backgroundColor: "rgb(245 158 11 / 0.12)", color: "rgb(217 119 6)" }}
                 >
                   <Landmark size={12} />
                 </span>
-                <span className="min-w-0 truncate text-xs font-semibold text-fg/80 sm:text-sm">Rajasthan SET</span>
-                <span className="shrink-0 bg-fg/10 px-1 py-px font-mono text-[7px] uppercase tracking-wider text-fg/50 sm:px-1.5 sm:py-0.5 sm:text-[8px]">
-                  Upcoming
-                </span>
+                <span className="min-w-0 flex-1 truncate text-left text-[13px] font-semibold text-fg/80 sm:text-sm">SET Rajasthan</span>
+                <UpcomingTag />
               </div>
             </div>
           </div>
@@ -205,6 +229,9 @@ export default function Hero() {
                       <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-2" />
                       <p className="text-xs leading-relaxed text-muted transition-colors group-hover:text-fg">
                         {update.text}
+                        {isUpdateNew(update) && (
+                          <NewBadge className="ml-1.5 translate-y-[-1px]" />
+                        )}
                       </p>
                     </Link>
                   ))}

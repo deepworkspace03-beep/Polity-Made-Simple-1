@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { Zap, ArrowRight, ExternalLink } from "lucide-react";
-import { UPDATES } from "../data/updates";
+import { Zap, ExternalLink } from "lucide-react";
+import { UPDATES, isUpdateNew } from "../data/updates";
+import NewBadge from "../components/NewBadge";
 
 export default function Updates() {
   return (
@@ -55,11 +56,7 @@ export default function Updates() {
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-medium text-fg">{update.text}</p>
-                  {update.isNew && (
-                    <span className="inline-flex shrink-0 items-center gap-1 rounded-md bg-red-500/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-red-500">
-                      NEW
-                    </span>
-                  )}
+                  {isUpdateNew(update) && <NewBadge />}
                 </div>
                 {update.date && (
                   <p className="mt-1 font-mono text-[10px] text-muted">{update.date}</p>
