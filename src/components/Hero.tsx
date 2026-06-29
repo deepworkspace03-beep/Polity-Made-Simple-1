@@ -15,6 +15,20 @@ import SyllabusChip from "./SyllabusChip";
 const PAPER_1_TOPICS = ["Teaching Aptitude", "Research Methodology", "ICT & Reasoning"];
 const PAPER_2_TOPICS = ["Political Theory", "Indian Government", "International Relations"];
 
+/**
+ * Muted "Upcoming" status pill — filled with the page background so it blends
+ * into the theme (light & dark), a hairline border for definition and a small
+ * teal accent dot so it reads as a status without any loud colour.
+ */
+function UpcomingBadge() {
+  return (
+    <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-edge bg-bg px-1.5 py-0.5 font-mono text-[7px] font-bold uppercase tracking-wide text-muted sm:text-[8px]">
+      <span aria-hidden="true" className="h-1 w-1 rounded-full bg-brand-2/70" />
+      Upcoming
+    </span>
+  );
+}
+
 export default function Hero() {
   return (
     <section
@@ -173,41 +187,38 @@ export default function Hero() {
                 </Link>
               </div>
 
-              {/* ── Upcoming exams ── */}
+              {/* ── Upcoming exams — two compact columns on every screen,
+                  each with a muted "Upcoming" status pill ── */}
               <div className="anim-hero anim-d4 mt-4 grid grid-cols-2 gap-2.5 sm:mt-5 sm:gap-3">
                 <div className="hero-chip hero-chip-cuet flex min-w-0 items-center gap-1.5 rounded-lg border border-edge bg-card px-2.5 py-2 sm:gap-2.5 sm:px-4 sm:py-3">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-brand-2/15 text-brand-2 sm:h-7 sm:w-7">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-brand-2/15 text-brand-2 sm:h-7 sm:w-7">
                     <BookOpen size={12} />
                   </span>
                   <span className="min-w-0 flex-1 truncate text-[11px] font-semibold text-fg/80 sm:text-sm">CUET-PG</span>
-                  <span className="hidden shrink-0 rounded bg-fg/10 px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-wider text-fg/50 sm:inline-block">
-                    Upcoming
-                  </span>
+                  <UpcomingBadge />
                 </div>
                 <div className="hero-chip hero-chip-rset flex min-w-0 items-center gap-1.5 rounded-lg border border-edge bg-card px-2.5 py-2 sm:gap-2.5 sm:px-4 sm:py-3">
                   <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md sm:h-7 sm:w-7"
+                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md sm:h-7 sm:w-7"
                     style={{ backgroundColor: "rgb(245 158 11 / 0.12)", color: "rgb(217 119 6)" }}
                   >
                     <Landmark size={12} />
                   </span>
-                  {/* Responsive label: "SET Rajasthan" on mobile, "Rajasthan SET" on ≥sm */}
+                  {/* Responsive label: "SET (Raj.)" on mobile, "Rajasthan SET" on ≥sm */}
                   <span className="min-w-0 flex-1 truncate text-[11px] font-semibold text-fg/80 sm:text-sm">
-                    <span className="sm:hidden">SET Rajasthan</span>
+                    <span className="sm:hidden">SET (Raj.)</span>
                     <span className="hidden sm:inline">Rajasthan SET</span>
                   </span>
-                  <span className="hidden shrink-0 rounded bg-fg/10 px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-wider text-fg/50 sm:inline-block">
-                    Upcoming
-                  </span>
+                  <UpcomingBadge />
                 </div>
               </div>
             </div>
           </div>
 
-          {/* ── Desktop updates panel (col 2 / row 2) — premium card that
-              aligns with the exam card and runs to the chips' level ── */}
-          <aside className="hidden lg:col-start-2 lg:row-start-2 lg:block">
-            <div className="anim-hero anim-d4 flex h-full flex-col rounded-2xl border border-edge bg-card/70 p-5 shadow-[var(--shadow-card)] backdrop-blur-sm">
+          {/* ── Desktop updates panel (col 2) — premium card, vertically
+              centered against the full hero content for a balanced layout ── */}
+          <aside className="hidden lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:flex lg:items-center">
+            <div className="anim-hero anim-d4 flex w-full flex-col rounded-2xl border border-edge bg-card/70 px-5 py-7 shadow-[var(--shadow-card)] backdrop-blur-sm xl:min-h-[28rem]">
 
               {/* Header with View All */}
               <div className="flex items-center justify-between">
@@ -226,15 +237,15 @@ export default function Hero() {
               </div>
 
               {/* Divider */}
-              <span className="mt-3 block h-px bg-edge" />
+              <span className="mt-4 block h-px bg-edge" />
 
               {/* All updates — fill the available height, each clickable */}
-              <div className="mt-2 flex-1 space-y-0.5 overflow-y-auto pr-0.5">
+              <div className="mt-3 flex flex-1 flex-col justify-between gap-1 overflow-y-auto pr-0.5">
                 {UPDATES.map((update) => (
                   <UpdateLink
                     key={update.id}
                     update={update}
-                    className="group flex items-center gap-2.5 rounded-lg px-2 py-2 transition-colors hover:bg-fg/[0.04]"
+                    className="group flex items-center gap-2.5 rounded-lg px-2 py-2.5 transition-colors hover:bg-fg/[0.04]"
                   >
                     <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-2 transition-transform group-hover:scale-125" />
                     <span className="min-w-0 flex-1 truncate text-xs text-muted transition-colors group-hover:text-fg">
@@ -252,7 +263,7 @@ export default function Hero() {
               {/* See all — pinned to the bottom of the panel */}
               <Link
                 to="/updates"
-                className="mt-2 flex items-center justify-center gap-1.5 border-t border-edge pt-3 text-[11px] font-medium text-muted transition-colors hover:text-fg"
+                className="mt-3 flex items-center justify-center gap-1.5 border-t border-edge pt-4 text-[11px] font-medium text-muted transition-colors hover:text-fg"
               >
                 <Zap size={9} className="text-brand-2" />
                 See all announcements →

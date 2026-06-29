@@ -52,10 +52,20 @@ export default function SyllabusChip({
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label={`${label} syllabus`}
-        className="inline-flex shrink-0 items-center gap-1 rounded-full border border-edge bg-card/80 px-1.5 py-0.5 text-[9px] font-semibold text-muted backdrop-blur-sm transition-all hover:border-brand/40 hover:text-brand active:scale-95 sm:px-2 sm:text-[10px]"
+        className={`group/syl inline-flex shrink-0 cursor-pointer items-center gap-1 rounded-full border px-2 py-0.5 text-[9px] font-semibold text-brand shadow-sm backdrop-blur-sm transition-all duration-200 hover:-translate-y-px hover:border-brand/55 hover:bg-brand/[0.14] hover:shadow-md active:translate-y-0 active:scale-95 sm:px-2.5 sm:text-[10px] ${
+          open
+            ? "border-brand/60 bg-brand/[0.16] shadow-md"
+            : "border-brand/30 bg-brand/[0.07]"
+        }`}
       >
         <ScrollText size={10} className="shrink-0 sm:h-3 sm:w-3" />
         Syllabus
+        <span
+          aria-hidden="true"
+          className="font-bold leading-none transition-transform duration-200 group-hover/syl:translate-x-0.5"
+        >
+          &rsaquo;
+        </span>
       </button>
 
       {open && (

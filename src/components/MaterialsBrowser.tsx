@@ -183,7 +183,7 @@ export default function MaterialsBrowser({
                 href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="card-interactive group flex items-center gap-3 p-3.5"
+                className="card-interactive card-tint group flex items-center gap-3 p-3.5"
               >
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-brand/10 text-brand">
                   <FileText size={17} />

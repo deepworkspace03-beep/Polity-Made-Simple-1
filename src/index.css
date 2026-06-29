@@ -10,8 +10,8 @@
   ───────────────────────────────────────────────────────────────
 */
 :root {
-  --bg:     210 220 232;   /* slate blue-gray — noticeably less white */
-  --band:   200 212 224;   /* deeper tinted alternating band          */
+  --bg:     201 212 227;   /* deepened slate blue-gray — calmer, less white */
+  --band:   190 203 219;   /* deeper tinted alternating band          */
   --card:   228 238 246;   /* off-white with clear blue tint          */
   --edge:   182 198 214;   /* visible, clean hairline borders         */
   --fg:     14  19  25;    /* near-black text                         */
@@ -59,13 +59,54 @@
   }
   body {
     @apply bg-bg text-fg antialiased;
-    /* Very soft blue→teal wash so bare pages never read as flat white. */
-    background-image:
-      radial-gradient(50rem 32rem at 8% -8%, rgb(var(--brand) / 0.06), transparent 60%),
-      radial-gradient(46rem 30rem at 100% 4%, rgb(var(--brand-2) / 0.05), transparent 58%);
-    background-attachment: fixed;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
+
+  /* ── Cohesive ambient background ──────────────────────────────────
+     A single, page-wide layered backdrop sits behind everything (fixed,
+     so it stays put while content scrolls for a calm, premium feel):
+       • ::before → a soft blue/teal gradient "mesh" for depth.
+       • ::after  → a barely-there film grain for subtle texture.
+     Non-hero sections are transparent (see .surface-a/-b) so this shows
+     through continuously. Pure CSS + one tiny inline SVG = no requests,
+     no layout shift, GPU-composited (no scroll repaint). */
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+  }
+  body::before {
+    z-index: -2;
+    /* Light mode: a rich, multi-hue aurora (blue · teal-green · violet ·
+       cyan). A full-viewport diagonal wash tints even the centre so plain
+       areas are gently dimmed and premium — never flat white — while corner
+       pools add depth. Low opacities keep dark text perfectly crisp. */
+    background:
+      radial-gradient(50rem 40rem at -5% -8%, rgb(20 168 138 / 0.20), transparent 55%),
+      radial-gradient(48rem 38rem at 105% 0%, rgb(46 104 224 / 0.16), transparent 55%),
+      radial-gradient(48rem 42rem at 104% 106%, rgb(22 170 140 / 0.18), transparent 55%),
+      radial-gradient(46rem 40rem at -5% 110%, rgb(124 112 230 / 0.13), transparent 55%),
+      linear-gradient(135deg,
+        rgb(20 162 132 / 0.10) 0%,
+        rgb(46 104 224 / 0.06) 52%,
+        rgb(124 112 230 / 0.08) 100%);
+  }
+  body::after {
+    z-index: -1;
+    opacity: 0.022;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+  .dark body::before {
+    background:
+      radial-gradient(58rem 42rem at 6% -8%, rgb(var(--brand) / 0.11), transparent 60%),
+      radial-gradient(52rem 40rem at 100% 4%, rgb(var(--brand-2) / 0.09), transparent 58%),
+      radial-gradient(50rem 42rem at 50% 112%, rgb(var(--brand) / 0.07), transparent 62%);
+  }
+  .dark body::after { opacity: 0.05; }
+
   :focus-visible {
     @apply outline-none ring-2 ring-brand ring-offset-2;
     --tw-ring-offset-color: rgb(var(--bg));
@@ -118,24 +159,21 @@
     @apply inline-flex items-center justify-center gap-2 border border-edge bg-card px-4 py-2.5 text-sm font-semibold text-fg transition-transform hover:bg-fg/5 active:scale-[0.97];
   }
 
-  /* Soft, premium section surfaces — a layered, eye-friendly background
-     inspired by (but distinct from) the hero: gentle corner glows plus a
-     faint "light from above" sheen so sections read as elevated panels,
-     never flat white. Pure CSS gradients → zero runtime cost, no CLS.
-     -a sits on the base background, -b on the alternating band. */
+  /* Section surfaces — mostly transparent so the page-wide ambient mesh
+     (see body::before/::after) flows through every section for a cohesive
+     feel. Each adds only a faint "light from above" sheen for depth; -b is
+     a subtly tinted band so adjacent sections still separate softly. */
   .surface-a {
-    background-color: rgb(var(--bg));
     background-image:
-      radial-gradient(46rem 26rem at 50% -12%, rgb(var(--brand) / 0.07), transparent 62%),
-      radial-gradient(40rem 24rem at 0% 108%, rgb(var(--brand-2) / 0.06), transparent 60%),
-      linear-gradient(180deg, rgb(var(--card) / 0.45), transparent 34%);
+      radial-gradient(46rem 22rem at 50% -6%, rgb(var(--brand) / 0.06), transparent 62%),
+      linear-gradient(180deg, rgb(var(--card) / 0.30), transparent 28%);
   }
   .surface-b {
-    background-color: rgb(var(--band));
+    background-color: rgb(var(--band) / 0.5);
     background-image:
-      radial-gradient(44rem 26rem at 100% -8%, rgb(var(--brand-2) / 0.08), transparent 58%),
-      radial-gradient(42rem 24rem at 0% 110%, rgb(var(--brand) / 0.06), transparent 58%),
-      linear-gradient(180deg, rgb(var(--card) / 0.40), transparent 30%);
+      radial-gradient(46rem 26rem at 100% -8%, rgb(var(--brand-2) / 0.09), transparent 60%),
+      radial-gradient(40rem 24rem at 0% 112%, rgb(var(--brand) / 0.06), transparent 60%),
+      linear-gradient(180deg, rgb(var(--card) / 0.30), transparent 30%);
   }
 
   /* Cards — sharp rectangle with a faint top sheen + soft elevation. */
@@ -150,6 +188,15 @@
     @apply transition-all hover:-translate-y-1 hover:border-brand/40 active:scale-[0.99];
   }
   .card-interactive:hover { box-shadow: var(--shadow-card-hover); }
+
+  /* Softly-tinted card — a gentle teal→blue wash over the card surface so
+     tiles read as elegant coloured panels instead of plain white. Pairs
+     with .card / .card-interactive (defined after them so the tint wins). */
+  .card-tint {
+    background-image:
+      linear-gradient(180deg, rgb(var(--sheen) / var(--sheen-op)), transparent 62%),
+      linear-gradient(135deg, rgb(var(--brand-2) / 0.08) 0%, transparent 46%, rgb(var(--brand) / 0.07) 100%);
+  }
 
   /* Active filter pill. */
   .pill-active {

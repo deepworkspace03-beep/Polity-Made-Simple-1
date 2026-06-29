@@ -17,7 +17,7 @@ export default function QuickAccess({
   onComingSoon: (message: string) => void;
 }) {
   const cardClass =
-    "card-interactive group flex items-center gap-3 p-4 text-left shadow-sm";
+    "card-interactive card-tint group flex items-center gap-3 p-4 text-left shadow-sm";
 
   return (
     <section className="surface-a border-b border-edge">

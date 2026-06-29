@@ -59,10 +59,12 @@ export default function About() {
               </div>
             </div>
 
-            {/* Short bio */}
-            <p className="mt-4 text-[13px] leading-relaxed text-muted sm:text-sm">
-              {AUTHOR.bio}
-            </p>
+            {/* Short bio — compact paragraphs */}
+            <div className="mt-4 space-y-2 text-[13px] leading-relaxed text-muted sm:text-sm">
+              {AUTHOR.bio.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
 
             {/* Contact — label shows on tablet/desktop, email always visible */}
             <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">

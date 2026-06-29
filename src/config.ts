@@ -30,12 +30,15 @@ export const SITE = {
 export const AUTHOR = {
   name: "Deepak Kumar Swami",
   roles: ["Founder", "Mentor", "Educator"], // joined with a "•" separator
-  bio:
-    "Qualified UGC NET JRF (Political Science) with 99.826 percentile (2025), " +
-    "along with GATE (Economics) and UGC NET (Geography). Built this platform " +
-    "to help aspirants crack JRF through high-quality notes, PYQ analysis, " +
-    "realistic mock tests and practical preparation strategies — making " +
-    "learning simple, smart and effective.",
+  // Bio is an array of short paragraphs (rendered with tight spacing).
+  bio: [
+    "The author is a DU alumnus who has qualified UGC-NET / JRF in Political " +
+      "Science with a 99.826 percentile (2025), along with GATE (Economics) " +
+      "and UGC-NET (Geography).",
+    "Passionate about simplifying Political Science for aspirants through " +
+      "quality notes, PYQ analysis, mock tests and practical strategies — " +
+      "making preparation simpler, effective and result-oriented.",
+  ],
   contactLabel: "For queries & feedback",
 };
 
@@ -46,7 +49,7 @@ export const NAV_LINKS = [
   { label: "Paper 1", href: "/paper-1" },
   { label: "Paper 2", href: "/paper-2" },
   { label: "Mock Tests", href: "/mock-tests" },
-  { label: "About", href: "/#about" },
+  { label: "About Us", href: "/#about" },
 ];
 
 // Community channels (Contact section). `brand` picks the colour:
