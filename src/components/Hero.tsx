@@ -239,20 +239,20 @@ export default function Hero() {
               {/* Divider */}
               <span className="mt-4 block h-px bg-edge" />
 
-              {/* All updates — fill the available height, each clickable */}
-              <div className="mt-3 flex flex-1 flex-col justify-between gap-1 overflow-y-auto pr-0.5">
+              {/* All updates — listed from the top, each clickable */}
+              <div className="mt-3 flex flex-1 flex-col justify-start gap-1 overflow-y-auto pr-0.5">
                 {UPDATES.map((update) => (
                   <UpdateLink
                     key={update.id}
                     update={update}
                     className="group flex items-center gap-2.5 rounded-lg px-2 py-2.5 transition-colors hover:bg-fg/[0.04]"
                   >
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-2 transition-transform group-hover:scale-125" />
-                    <span className="min-w-0 flex-1 truncate text-xs text-muted transition-colors group-hover:text-fg">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 self-start rounded-full bg-brand-2 transition-transform group-hover:scale-125" />
+                    <span className="min-w-0 flex-1 text-xs leading-snug text-muted transition-colors group-hover:text-fg">
                       {update.short ?? update.text}
                     </span>
                     {update.isNew && (
-                      <span className="shrink-0 rounded bg-brand-2 px-1 py-px text-[8px] font-bold uppercase text-white">
+                      <span className="shrink-0 rounded bg-red-500/15 px-1.5 py-px text-[8px] font-bold uppercase text-red-500">
                         New
                       </span>
                     )}
