@@ -14,6 +14,14 @@ type Props = {
 
 const PAPER_ORDER: Record<string, number> = { "Paper 1": 0, "Paper 2": 1 };
 
+// Featured item pinned to the top of the "Latest & Essentials" view —
+// the newest memory-recall paper, linked straight to its Google Drive PDF.
+const FEATURED = {
+  title: "UGC-NET Pol Sc Memory Recall June-2026",
+  driveUrl:
+    "https://drive.google.com/file/d/1XqhoJPCnLYjSwIhqplGfoLzYyC_-qaES/view?usp=drivesdk",
+};
+
 function PaperBadge({ paper }: { paper: LibraryItem["paper"] }) {
   const tone =
     paper === "Paper 1"
@@ -168,6 +176,31 @@ export default function MaterialsBrowser({
               The newest solutions and must-have material — use Quick Access above to filter everything.
             </p>
           </div>
+        )}
+
+        {/* ── Featured: newest memory-recall paper, pinned to the top of
+            the Latest & Essentials view (hidden once filters are active) ── */}
+        {!revealed && (
+          <a
+            href={FEATURED.driveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="card-interactive card-tint group mb-2 flex items-center gap-3 p-3.5"
+          >
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-brand/10 text-brand">
+              <FileText size={17} />
+            </span>
+            <span className="min-w-0 flex-1 text-sm font-semibold leading-snug sm:text-[15px]">
+              {FEATURED.title}
+            </span>
+            <span className="shrink-0 rounded bg-red-500/15 px-1.5 py-0.5 text-[10px] font-bold uppercase text-red-500">
+              New
+            </span>
+            <ExternalLink
+              size={16}
+              className="shrink-0 text-muted transition-colors group-hover:text-brand"
+            />
+          </a>
         )}
 
         {/* ── Results ── */}
