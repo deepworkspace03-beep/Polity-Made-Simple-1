@@ -7,6 +7,7 @@ import Paper1 from "./pages/Paper1";
 import Paper2 from "./pages/Paper2";
 import MockTests from "./pages/MockTests";
 import Updates from "./pages/Updates";
+import { trackPageView } from "./lib/analytics";
 
 type Theme = "dark" | "light";
 
@@ -17,6 +18,17 @@ function ScrollToTop() {
   useEffect(() => {
     if (!hash) window.scrollTo(0, 0);
   }, [pathname, hash]);
+  return null;
+}
+
+// Sends a GA4 page_view on every route change, including the first one —
+// React Router navigations don't reload the page, so gtag.js never sees
+// them on its own.
+function RouteTracker() {
+  const { pathname, search } = useLocation();
+  useEffect(() => {
+    trackPageView(pathname + search);
+  }, [pathname, search]);
   return null;
 }
 
@@ -51,6 +63,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <RouteTracker />
       {/* Shared layout: header + page content + footer on every route. */}
       <div className="flex min-h-screen flex-col">
         <Header theme={theme} toggleTheme={toggleTheme} />

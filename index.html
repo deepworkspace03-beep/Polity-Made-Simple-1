@@ -27,6 +27,23 @@
     />
 
     <!--
+      Google Analytics 4 (gtag.js). Loaded async so it never blocks
+      rendering. `send_page_view: false` disables gtag's own automatic
+      pageview so it doesn't double-count alongside the React Router
+      page-view tracking in src/lib/analytics.ts, which fires on every
+      SPA navigation (including the first one).
+    -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q9WQB602V2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-Q9WQB602V2", { send_page_view: false });
+    </script>
+
+    <!--
       Apply the saved theme BEFORE React loads so there is no
       light/dark "flash" on refresh. Defaults to light mode for new visitors.
     -->
