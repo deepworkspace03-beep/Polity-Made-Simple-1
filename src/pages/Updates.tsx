@@ -1,54 +1,30 @@
-import { Link } from "react-router-dom";
-import { Zap, ExternalLink } from "lucide-react";
+import { ExternalLink, ArrowRight, Send } from "lucide-react";
 import { UPDATES } from "../data/updates";
+import { SITE } from "../config";
+import PageHeader from "../components/PageHeader";
+import UpdateLink from "../components/UpdateLink";
 
 export default function Updates() {
   return (
-    <section className="mx-auto max-w-2xl px-4 py-14 sm:px-6">
+    <section className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-10">
+      <PageHeader
+        crumb="Updates"
+        eyebrow="Announcements"
+        title="Latest Updates"
+        subtitle="New content, exam news, and site announcements — all in one place."
+      />
 
-      {/* Header */}
-
-      <div className="mt-6 text-center">
-        <Link to="/" className="text-sm font-medium text-brand hover:underline">
-          ← Back to Home
-        </Link>
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="flex h-6 w-6 shrink-0 items-center justify-center gradient-brand text-white">
-          <Zap size={12} fill="currentColor" />
-        </span>
-        <p className="eyebrow text-[11px]">Announcements</p>
-      </div>
-      <h1 className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">
-        Latest Updates
-      </h1>
-      <p className="mt-2 text-sm text-muted">
-        New content, exam news, and site announcements — all in one place.
-      </p>
-
-      {/* Update list */}
-      <div className="mt-8 space-y-2">
+      {/* Update list — UpdateLink routes internal links client-side and
+          opens Drive files in a new tab (same behaviour as the homepage). */}
+      <div className="mt-7 space-y-2">
         {UPDATES.map((update) => {
-          const hasLink = update.href || update.driveUrl;
-          const Component = hasLink ? "a" : "div";
-          const linkProps = hasLink
-            ? {
-                href: update.driveUrl || update.href,
-                ...(update.driveUrl && {
-                  target: "_blank",
-                  rel: "noopener noreferrer",
-                }),
-              }
-            : {};
-
+          const hasLink = Boolean(update.href || update.driveUrl);
           return (
-            <Component
+            <UpdateLink
               key={update.id}
-              {...linkProps}
+              update={update}
               className={`flex items-start gap-4 p-4 transition-all ${
-                hasLink
-                  ? "card-interactive group cursor-pointer"
-                  : "card"
+                hasLink ? "card-interactive group cursor-pointer" : "card"
               }`}
             >
               <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-2" />
@@ -65,18 +41,41 @@ export default function Updates() {
                   <p className="mt-1 font-mono text-[10px] text-muted">{update.date}</p>
                 )}
               </div>
-              {hasLink && (
+              {update.driveUrl && (
                 <ExternalLink
                   size={15}
                   className="mt-1 shrink-0 text-muted transition-colors group-hover:text-brand"
                   aria-hidden="true"
                 />
               )}
-            </Component>
+              {!update.driveUrl && update.href && (
+                <ArrowRight
+                  size={15}
+                  className="mt-1 shrink-0 text-muted transition-all group-hover:translate-x-0.5 group-hover:text-brand"
+                  aria-hidden="true"
+                />
+              )}
+            </UpdateLink>
           );
         })}
       </div>
 
+      {/* New material is announced on Telegram first — friendly pointer */}
+      <div className="card mt-8 flex flex-col items-center gap-3 p-5 text-center sm:flex-row sm:justify-between sm:text-left">
+        <p className="text-sm text-muted">
+          New material and exam alerts land on{" "}
+          <span className="font-semibold text-fg">Telegram</span> first.
+        </p>
+        <a
+          href={SITE.telegram}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-tg shrink-0 rounded-lg px-3.5 py-2 text-xs"
+        >
+          <Send size={13} />
+          Join the channel
+        </a>
+      </div>
     </section>
   );
 }

@@ -99,7 +99,7 @@ export default function MaterialsBrowser({
       : "border-edge bg-bg text-muted hover:border-brand/40 hover:text-fg");
 
   return (
-    <section id="materials" className="surface-b border-t border-edge">
+    <section id="materials" className="surface-b scroll-mt-24 border-t border-edge lg:scroll-mt-20">
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-12">
 
         {revealed ? (

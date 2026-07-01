@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { ArrowLeft, ExternalLink, BookOpen } from "lucide-react";
+import { ExternalLink, BookOpen } from "lucide-react";
 import { mockPapers, type MockTest } from "../data/mockTests";
+import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 
 // Small coloured badge for the paper a test belongs to.
@@ -24,27 +24,15 @@ function PaperBadge({ paper }: { paper: MockTest["paper"] }) {
  */
 export default function MockTests() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
-      <Link
-        to="/"
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-brand"
-      >
-        <ArrowLeft size={16} />
-        Back to home
-      </Link>
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-10">
+      <PageHeader
+        crumb="Mock Tests"
+        eyebrow="Mock Tests"
+        title="Mock Test Series"
+        subtitle="Paper-wise & unit-wise mock tests for UGC-NET/JRF · Free, no registration. English & Hindi, with detailed solutions."
+      />
 
-      <div className="mt-4 mb-6">
-        <p className="eyebrow">Mock Tests</p>
-        <h1 className="mt-1 text-3xl font-extrabold tracking-tight">
-          Mock Test Series
-        </h1>
-        <p className="mt-1 text-sm text-muted">
-          Paper-wise & unit-wise mock tests for UGC-NET/JRF · Free, no registration.
-          English & Hindi, with detailed solutions.
-        </p>
-      </div>
-
-      <Reveal>
+      <Reveal className="mt-7">
         <div className="flex flex-col gap-8">
           {mockPapers.map((paperGroup) => (
             <div key={paperGroup.paper} className="space-y-4">

@@ -6,14 +6,42 @@ import {
   Landmark,
   Zap,
   ClipboardList,
+  Send,
+  MessageCircle,
+  Users,
 } from "lucide-react";
 import { SITE } from "../config";
 import { UPDATES } from "../data/updates";
+import { library } from "../data/library";
+import { mockPapers } from "../data/mockTests";
 import UpdateLink from "./UpdateLink";
 import SyllabusChip from "./SyllabusChip";
 
 const PAPER_1_TOPICS = ["Teaching Aptitude", "Research Methodology", "ICT & Reasoning"];
 const PAPER_2_TOPICS = ["Political Theory", "Indian Government", "International Relations"];
+
+// "At a glance" numbers — derived from the real data files, so they update
+// automatically whenever material is added (nothing to edit here).
+const STAT_ITEMS = [
+  {
+    value: library.filter((i) => i.type !== "Syllabus").length,
+    label: "Study PDFs",
+  },
+  {
+    value: mockPapers.reduce(
+      (sum, p) => sum + p.sections.reduce((s, sec) => s + sec.tests.length, 0),
+      0
+    ),
+    label: "Mock Tests",
+  },
+  {
+    value: new Set(
+      library.filter((i) => i.unit.startsWith("Unit")).map((i) => `${i.paper}|${i.unit}`)
+    ).size,
+    label: "Units Covered",
+  },
+  { value: 2, label: "Languages" },
+];
 
 /**
  * Muted "Upcoming" status pill — filled with the page background so it blends
@@ -52,7 +80,7 @@ export default function Hero() {
       {/* Vertically-centered content fills the first screen; a two-column
           grid on desktop aligns the updates panel with the exam card. */}
       <div className="relative mx-auto flex min-h-[calc(100svh-124px)] max-w-6xl flex-col justify-center px-4 py-8 sm:px-6 lg:min-h-[calc(100svh-68px)] lg:py-10">
-        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-x-10 lg:gap-y-10">
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-x-10 lg:gap-y-10">
 
           {/* ── Heading block (desktop: col 1 / row 1) ── */}
           <div className="text-center lg:col-start-1 lg:row-start-1">
@@ -219,23 +247,25 @@ export default function Hero() {
                 </button>
               </div>
 
-              {/* More updates soon — placeholder row under the upcoming chips */}
-              <button
-                type="button"
+              {/* More updates soon — links to the announcements page */}
+              <Link
+                to="/updates"
                 className="group mt-6 flex w-full items-center justify-center gap-2 rounded-lg gradient-brand px-3 py-2 text-white shadow-sm transition-transform active:scale-[0.98] sm:mt-7 sm:py-2.5"
               >
                 <Zap size={12} className="animate-pulse" fill="currentColor" />
                 <span className="text-[11px] font-semibold sm:text-xs">
                   More updates soon
                 </span>
-              </button>
+                <span className="text-[11px] transition-transform group-hover:translate-x-0.5 sm:text-xs">→</span>
+              </Link>
             </div>
           </div>
 
-          {/* ── Desktop updates panel (col 2) — premium card, vertically
-              centered against the full hero content for a balanced layout ── */}
-          <aside className="hidden lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:flex lg:items-center">
-            <div className="anim-hero anim-d4 flex w-full flex-col rounded-2xl border border-edge bg-card/70 px-5 py-7 shadow-[var(--shadow-card)] backdrop-blur-sm xl:min-h-[28rem]">
+          {/* ── Desktop sidebar (col 2) — Latest Updates starts level with the
+              heading so the top-right corner is never empty, and a compact
+              Community card fills the column bottom for a balanced layout ── */}
+          <aside className="hidden lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:flex lg:flex-col lg:justify-between lg:gap-4">
+            <div className="anim-hero anim-d4 flex min-h-0 w-full flex-col rounded-2xl border border-edge bg-card/70 px-5 py-6 shadow-[var(--shadow-card)] backdrop-blur-sm">
 
               {/* Header with View All */}
               <div className="flex items-center justify-between">
@@ -285,6 +315,58 @@ export default function Hero() {
                 <Zap size={9} className="text-brand-2" />
                 See all announcements →
               </Link>
+            </div>
+
+            {/* At a glance — live counts from the data files */}
+            <div className="anim-hero anim-d5 rounded-2xl border border-edge bg-card/70 p-5 shadow-[var(--shadow-card)] backdrop-blur-sm">
+              <p className="eyebrow text-[11px]">At a glance</p>
+              <dl className="mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-edge/60">
+                {STAT_ITEMS.map((stat) => (
+                  /* flex-col-reverse shows the number above its label while
+                     keeping the valid dt → dd source order */
+                  <div key={stat.label} className="flex flex-col-reverse gap-1 bg-card px-3 py-2.5">
+                    <dt className="text-[10px] font-medium uppercase tracking-wide text-muted">
+                      {stat.label}
+                    </dt>
+                    <dd className="font-mono text-lg font-semibold leading-none text-brand">
+                      {stat.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+
+            {/* Community — quick joins, anchored to the column bottom */}
+            <div className="anim-hero anim-d6 rounded-2xl border border-edge bg-card/70 p-5 shadow-[var(--shadow-card)] backdrop-blur-sm">
+              <div className="flex items-center gap-2">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md gradient-brand text-white">
+                  <Users size={10} />
+                </span>
+                <p className="eyebrow text-[11px]">Community</p>
+              </div>
+              <p className="mt-2.5 text-xs leading-relaxed text-muted">
+                New PDFs, exam alerts and discussion — straight to your phone.
+              </p>
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                <a
+                  href={SITE.telegram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-tg rounded-lg px-2 py-2 text-xs"
+                >
+                  <Send size={13} />
+                  Telegram
+                </a>
+                <a
+                  href={SITE.whatsappChannel}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-wa rounded-lg px-2 py-2 text-xs"
+                >
+                  <MessageCircle size={13} />
+                  WhatsApp
+                </a>
+              </div>
             </div>
           </aside>
 

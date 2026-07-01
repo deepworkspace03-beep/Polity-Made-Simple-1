@@ -29,6 +29,15 @@
   --sheen-op:        0.55;
   --shadow-card:       0 1px 2px rgb(20 40 80 / 0.04), 0 6px 16px rgb(20 40 80 / 0.05);
   --shadow-card-hover: 0 8px 26px rgb(20 40 80 / 0.10);
+
+  /* Dot lattice — the textured backdrop. Light mode uses deep navy "ink"
+     dots at low opacity so the texture reads clearly on the slate page
+     without competing with text. --dot-soft-op adds a whisper of the same
+     texture to section surfaces (light only; 0 turns it off in dark). */
+  --dot:         35 62 110;
+  --dot-1-op:    0.17;   /* primary 1.5px lattice          */
+  --dot-2-op:    0.09;   /* offset 1px lattice (depth)     */
+  --dot-soft-op: 0.07;   /* faint texture on section bands */
 }
 
 .dark {
@@ -51,6 +60,12 @@
   --sheen-op:        0.035;
   --shadow-card:       0 1px 2px rgb(0 0 0 / 0.35), 0 6px 18px rgb(0 0 0 / 0.32);
   --shadow-card-hover: 0 10px 30px rgb(0 0 0 / 0.45);
+
+  /* Dark dot lattice — the original full-strength edge dots */
+  --dot:         46 58 72;
+  --dot-1-op:    1;
+  --dot-2-op:    0.4;
+  --dot-soft-op: 0;
 }
 
 @layer base {
@@ -84,18 +99,19 @@
        areas are gently dimmed and premium — never flat white — while corner
        pools add depth. Low opacities keep dark text perfectly crisp. */
     background:
-      radial-gradient(50rem 40rem at -5% -8%, rgb(20 168 138 / 0.20), transparent 55%),
-      radial-gradient(48rem 38rem at 105% 0%, rgb(46 104 224 / 0.16), transparent 55%),
-      radial-gradient(48rem 42rem at 104% 106%, rgb(22 170 140 / 0.18), transparent 55%),
-      radial-gradient(46rem 40rem at -5% 110%, rgb(124 112 230 / 0.13), transparent 55%),
+      radial-gradient(64rem 30rem at 50% -12%, rgb(255 255 255 / 0.30), transparent 60%),
+      radial-gradient(50rem 40rem at -5% -8%, rgb(20 168 138 / 0.22), transparent 55%),
+      radial-gradient(48rem 38rem at 105% 0%, rgb(46 104 224 / 0.18), transparent 55%),
+      radial-gradient(48rem 42rem at 104% 106%, rgb(22 170 140 / 0.20), transparent 55%),
+      radial-gradient(46rem 40rem at -5% 110%, rgb(124 112 230 / 0.15), transparent 55%),
       linear-gradient(135deg,
-        rgb(20 162 132 / 0.10) 0%,
-        rgb(46 104 224 / 0.06) 52%,
-        rgb(124 112 230 / 0.08) 100%);
+        rgb(20 162 132 / 0.11) 0%,
+        rgb(46 104 224 / 0.07) 52%,
+        rgb(124 112 230 / 0.09) 100%);
   }
   body::after {
     z-index: -1;
-    opacity: 0.022;
+    opacity: 0.03;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 200px 200px;
   }
@@ -125,17 +141,17 @@
     color: transparent;
   }
 
-  /* Hero section: gradient + subtle dot grid (softer in light mode). */
+  /* Hero section: gradient + layered dot lattice. One rule for both themes —
+     the dot colour/strength comes from --dot* (see :root / .dark above). A
+     second, half-step-offset 1px lattice sits under the main one so the
+     texture reads rich and dimensional instead of flat. */
   .section-hero {
     background-image:
-      radial-gradient(rgb(var(--edge) / 0.22) 1.5px, transparent 1.5px),
+      radial-gradient(rgb(var(--dot) / var(--dot-1-op)) 1.5px, transparent 1.5px),
+      radial-gradient(rgb(var(--dot) / var(--dot-2-op)) 1px, transparent 1px),
       linear-gradient(170deg, rgb(var(--band)) 0%, rgb(var(--bg)) 100%);
-    background-size: 30px 30px, 100% 100%;
-  }
-  .dark .section-hero {
-    background-image:
-      radial-gradient(rgb(var(--edge)) 1.5px, transparent 1.5px),
-      linear-gradient(170deg, rgb(var(--band)) 0%, rgb(var(--bg)) 100%);
+    background-size: 30px 30px, 30px 30px, 100% 100%;
+    background-position: 0 0, 15px 15px, 0 0;
   }
 
   /* Uppercase mono micro-label above section titles. */
@@ -170,15 +186,19 @@
      a subtly tinted band so adjacent sections still separate softly. */
   .surface-a {
     background-image:
+      radial-gradient(rgb(var(--dot) / var(--dot-soft-op)) 1px, transparent 1px),
       radial-gradient(46rem 22rem at 50% -6%, rgb(var(--brand) / 0.06), transparent 62%),
       linear-gradient(180deg, rgb(var(--card) / 0.30), transparent 28%);
+    background-size: 24px 24px, auto, auto;
   }
   .surface-b {
     background-color: rgb(var(--band) / 0.5);
     background-image:
+      radial-gradient(rgb(var(--dot) / var(--dot-soft-op)) 1px, transparent 1px),
       radial-gradient(46rem 26rem at 100% -8%, rgb(var(--brand-2) / 0.09), transparent 60%),
       radial-gradient(40rem 24rem at 0% 112%, rgb(var(--brand) / 0.06), transparent 60%),
       linear-gradient(180deg, rgb(var(--card) / 0.30), transparent 30%);
+    background-size: 24px 24px, auto, auto, auto;
   }
 
   /* Cards — sharp rectangle with a faint top sheen + soft elevation. */
@@ -244,6 +264,13 @@
 }
 .anim-pop { animation: popIn 0.14s ease-out both; }
 
+/* ── Expanding content (accordion bodies) ── */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim-expand { animation: fadeSlideIn 0.2s ease-out both; }
+
 /* ──────────────────────────────────────────────────────────
    HERO ANIMATIONS
    ────────────────────────────────────────────────────────── */
@@ -288,7 +315,7 @@
 @media (prefers-reduced-motion: reduce) {
   .reveal, .anim-hero { opacity: 1; transform: none; transition: none; animation: none; }
   .anim-float, .anim-glow, .anim-glow-slow { animation: none; }
-  .animate-marquee, .anim-pop { animation: none; }
+  .animate-marquee, .anim-pop, .anim-expand { animation: none; }
   html { scroll-behavior: auto; }
 }
 

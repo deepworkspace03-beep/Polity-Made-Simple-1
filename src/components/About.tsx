@@ -11,7 +11,7 @@ import profile from "../assets/profile.webp";
  */
 export default function About() {
   return (
-    <section id="about" className="surface-a border-t border-edge">
+    <section id="about" className="surface-a scroll-mt-24 border-t border-edge lg:scroll-mt-20">
       <Reveal>
         <div className="mx-auto max-w-2xl px-4 py-9 sm:px-6 sm:py-11">
 

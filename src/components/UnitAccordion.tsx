@@ -34,6 +34,7 @@ export default function UnitAccordion({ section }: { section: ResSection }) {
       {/* header (click to expand) */}
       <button
         onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
         className="flex w-full items-center justify-between gap-3 p-4 text-left transition-colors hover:bg-fg/5"
       >
         <span className="flex items-center gap-2">
@@ -53,7 +54,7 @@ export default function UnitAccordion({ section }: { section: ResSection }) {
 
       {/* body */}
       {open && (
-        <div className="border-t border-edge px-4 pb-4 pt-3">
+        <div className="anim-expand border-t border-edge px-4 pb-4 pt-3">
           {section.categories.map((cat) => (
             <div key={cat.label} className="mb-4 last:mb-0">
               <p className="eyebrow mb-2">{cat.label}</p>
