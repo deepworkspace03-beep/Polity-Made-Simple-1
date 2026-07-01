@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1220"/>
+      <stop offset="1" stop-color="#0F1B2B"/>
+    </linearGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2856C4"/>
+      <stop offset="1" stop-color="#12A078"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- soft brand glows -->
+  <circle cx="120" cy="80" r="260" fill="#2856C4" opacity="0.18"/>
+  <circle cx="1100" cy="560" r="280" fill="#12A078" opacity="0.16"/>
+
+  <!-- logo mark -->
+  <g transform="translate(96,166)">
+    <rect width="140" height="140" rx="30" fill="url(#g)"/>
+    <g fill="#fff" transform="translate(20,18) scale(4.2)">
+      <path d="M16 6 L25 11 H7 Z"/>
+      <rect x="9" y="13" width="2.5" height="8"/>
+      <rect x="14.75" y="13" width="2.5" height="8"/>
+      <rect x="20.5" y="13" width="2.5" height="8"/>
+      <rect x="7" y="22.5" width="18" height="2.5" rx="0.5"/>
+    </g>
+  </g>
+
+  <text x="270" y="255" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="800" fill="#FFFFFF">
+    Polity Made Simple
+  </text>
+  <text x="272" y="310" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="600" fill="#8FA3BF">
+    UGC NET / JRF Political Science
+  </text>
+
+  <text x="96" y="470" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#DCE6F2">
+    Notes · PYQs · Mock Tests · Current Affairs
+  </text>
+  <text x="96" y="520" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#DCE6F2">
+    Exam Strategy — also available in Hindi
+  </text>
+
+  <text x="96" y="588" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#39D6AE">
+    politymadesimple.com
+  </text>
+</svg>
