@@ -125,12 +125,17 @@
     color: transparent;
   }
 
-  /* Hero section: gradient + subtle dot grid. */
+  /* Hero section: gradient + subtle dot grid (softer in light mode). */
   .section-hero {
+    background-image:
+      radial-gradient(rgb(var(--edge) / 0.22) 1.5px, transparent 1.5px),
+      linear-gradient(170deg, rgb(var(--band)) 0%, rgb(var(--bg)) 100%);
+    background-size: 30px 30px, 100% 100%;
+  }
+  .dark .section-hero {
     background-image:
       radial-gradient(rgb(var(--edge)) 1.5px, transparent 1.5px),
       linear-gradient(170deg, rgb(var(--band)) 0%, rgb(var(--bg)) 100%);
-    background-size: 30px 30px, 100% 100%;
   }
 
   /* Uppercase mono micro-label above section titles. */

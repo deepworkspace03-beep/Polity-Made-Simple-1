@@ -190,14 +190,20 @@ export default function Hero() {
               {/* ── Upcoming exams — two compact columns on every screen,
                   each with a muted "Upcoming" status pill ── */}
               <div className="anim-hero anim-d4 mt-4 grid grid-cols-2 gap-2.5 sm:mt-5 sm:gap-3">
-                <div className="hero-chip hero-chip-cuet flex min-w-0 items-center gap-1.5 rounded-lg border border-edge bg-card px-2.5 py-2 sm:gap-2.5 sm:px-4 sm:py-3">
+                <button
+                  type="button"
+                  className="hero-chip hero-chip-cuet flex min-w-0 items-center gap-1.5 rounded-lg border border-edge bg-card px-2.5 py-2 text-left transition-colors hover:bg-fg/[0.04] active:scale-[0.98] sm:gap-2.5 sm:px-4 sm:py-3"
+                >
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-brand-2/15 text-brand-2 sm:h-7 sm:w-7">
                     <BookOpen size={12} />
                   </span>
                   <span className="min-w-0 flex-1 truncate text-[11px] font-semibold text-fg/80 sm:text-sm">CUET-PG</span>
                   <UpcomingBadge />
-                </div>
-                <div className="hero-chip hero-chip-rset flex min-w-0 items-center gap-1.5 rounded-lg border border-edge bg-card px-2.5 py-2 sm:gap-2.5 sm:px-4 sm:py-3">
+                </button>
+                <button
+                  type="button"
+                  className="hero-chip hero-chip-rset flex min-w-0 items-center gap-1.5 rounded-lg border border-edge bg-card px-2.5 py-2 text-left transition-colors hover:bg-fg/[0.04] active:scale-[0.98] sm:gap-2.5 sm:px-4 sm:py-3"
+                >
                   <span
                     className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md sm:h-7 sm:w-7"
                     style={{ backgroundColor: "rgb(245 158 11 / 0.12)", color: "rgb(217 119 6)" }}
@@ -210,8 +216,19 @@ export default function Hero() {
                     <span className="hidden sm:inline">Rajasthan SET</span>
                   </span>
                   <UpcomingBadge />
-                </div>
+                </button>
               </div>
+
+              {/* More updates soon — placeholder row under the upcoming chips */}
+              <button
+                type="button"
+                className="group mt-6 flex w-full items-center justify-center gap-2 rounded-lg gradient-brand px-3 py-2 text-white shadow-sm transition-transform active:scale-[0.98] sm:mt-7 sm:py-2.5"
+              >
+                <Zap size={12} className="animate-pulse" fill="currentColor" />
+                <span className="text-[11px] font-semibold sm:text-xs">
+                  More updates soon
+                </span>
+              </button>
             </div>
           </div>
 
