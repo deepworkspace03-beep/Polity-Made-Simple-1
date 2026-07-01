@@ -56,7 +56,8 @@ export default function App() {
         <Header theme={theme} toggleTheme={toggleTheme} />
 
         <main className="flex-1">
-          {/* ── ROUTES: add a new <Route> here to add a new page ── */}
+          {/* ── ROUTES: add a new <Route> here to add a new page ──
+              Also add the path to src/seo/routes.ts so it shows up in sitemap.xml */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/paper-1" element={<Paper1 />} />
