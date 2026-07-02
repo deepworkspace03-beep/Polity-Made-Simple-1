@@ -168,13 +168,9 @@ export default function MaterialsBrowser({
         ) : (
           /* ── Default: Latest & Essentials ── */
           <div className="mb-6">
-            <p className="eyebrow">Fresh on the shelf</p>
-            <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight sm:text-3xl">
+            <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
               Latest &amp; Essentials
             </h2>
-            <p className="mt-1.5 text-sm text-muted">
-              The newest solutions and must-have material — use Quick Access above to filter everything.
-            </p>
           </div>
         )}
 

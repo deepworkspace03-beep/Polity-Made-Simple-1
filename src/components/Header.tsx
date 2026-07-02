@@ -118,9 +118,9 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
               href={SITE.telegram}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-tg px-2.5 py-2 sm:px-3"
+              className="btn-tg-soft px-2.5 py-2 text-sm sm:px-4"
             >
-              <Send size={15} />
+              <Send size={14} />
               <span className="hidden sm:inline">Join Telegram</span>
             </a>
 
@@ -196,7 +196,7 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
             href={SITE.telegram}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-tg w-full justify-center px-3 py-2 text-sm"
+            className="btn-tg-soft w-full px-3 py-2 text-sm"
           >
             <Send size={14} />
             Join Telegram

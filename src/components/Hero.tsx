@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import {
-  GraduationCap,
   Languages,
   BookOpen,
   Landmark,
@@ -20,6 +19,10 @@ const PAPER_2_TOPICS = ["Political Theory", "Indian Government", "International 
 // Split "UGC NET JRF · December 2026" so the session gets the gradient accent.
 // If the "·" is ever removed from config, the whole label renders plainly.
 const [EXAM_NAME, EXAM_SESSION] = SITE.examLabel.split("·").map((s) => s.trim());
+
+// Short session for small screens: "December 2026" → "Dec 2026", keeping the
+// heading on a single line even on narrow phones.
+const EXAM_SESSION_SHORT = EXAM_SESSION?.replace(/^([A-Za-z]{3})[A-Za-z]*/, "$1");
 
 /**
  * Muted "Upcoming" status pill — filled with the page background so it blends
@@ -103,24 +106,27 @@ export default function Hero() {
               {/* Grouped exam card: primary heading · Hindi · Papers · Mock series */}
               <div className="anim-hero anim-d3 rounded-2xl border border-edge bg-card/60 px-3 pb-3 pt-6 shadow-sm backdrop-blur-sm sm:px-4 sm:pb-4 sm:pt-7 lg:px-6 lg:pb-6 lg:pt-8">
 
-                {/* Primary exam heading — the clear focal point of the hero */}
-                <div className="flex flex-col items-center gap-2 sm:gap-2.5">
-                  <span className="eyebrow inline-flex items-center gap-1.5 text-[9px] tracking-[0.22em] sm:text-[10px]">
-                    <GraduationCap size={13} className="text-brand" />
-                    Target Exam
-                  </span>
-
-                  <h2 className="text-center text-[1.75rem] font-extrabold leading-[1.12] tracking-tight sm:text-4xl lg:text-[2.6rem]">
-                    <span className="whitespace-nowrap">{EXAM_NAME}</span>
+                {/* Primary exam heading — the clear focal point of the hero.
+                    Always a single line; the month abbreviates on phones. */}
+                <div className="flex flex-col items-center gap-2.5 sm:gap-3">
+                  <h2 className="whitespace-nowrap text-center text-2xl font-extrabold leading-none tracking-tight sm:text-3xl lg:text-4xl xl:text-[2.4rem]">
+                    {EXAM_NAME}
                     {EXAM_SESSION && (
                       <>
                         {" "}
-                        <span className="text-gradient whitespace-nowrap">
-                          {EXAM_SESSION}
+                        <span className="text-gradient">
+                          <span className="sm:hidden">{EXAM_SESSION_SHORT}</span>
+                          <span className="hidden sm:inline">{EXAM_SESSION}</span>
                         </span>
                       </>
                     )}
                   </h2>
+
+                  {/* Slim gradient accent underscoring the primary heading */}
+                  <span
+                    aria-hidden="true"
+                    className="block h-[3px] w-20 rounded-full gradient-brand opacity-80 sm:w-24"
+                  />
 
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-2/35 bg-brand-2/10 px-3 py-1 text-[12px] font-semibold text-fg sm:text-[13px]">
                     <Languages size={13} className="text-brand-2" />
@@ -244,12 +250,15 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ── RIGHT — updates panel on top, upcoming exams below, so the
-              column fills the space beside the exam card evenly ── */}
-          <aside className="hidden lg:flex lg:flex-col lg:gap-4">
+          {/* ── RIGHT — updates panel on top, upcoming exams below. The inner
+              wrapper is absolutely positioned so the column never adds height:
+              its height always matches the exam card, and a long updates list
+              scrolls inside its own panel instead of stretching the layout ── */}
+          <aside className="relative hidden lg:block">
+            <div className="absolute inset-0 flex flex-col gap-4">
 
             {/* Latest updates — stretches to keep the column height balanced */}
-            <div className="anim-hero anim-d4 flex w-full flex-1 flex-col rounded-2xl border border-edge bg-card/70 px-5 py-6 shadow-[var(--shadow-card)] backdrop-blur-sm">
+            <div className="anim-hero anim-d4 flex min-h-0 w-full flex-1 flex-col rounded-2xl border border-edge bg-card/70 px-5 py-6 shadow-[var(--shadow-card)] backdrop-blur-sm">
 
               {/* Header with View All */}
               <div className="flex items-center justify-between">
@@ -270,13 +279,15 @@ export default function Hero() {
               {/* Divider */}
               <span className="mt-4 block h-px bg-edge" />
 
-              {/* All updates — listed from the top, each clickable */}
-              <div className="mt-3 flex flex-1 flex-col gap-1 overflow-y-auto pr-0.5">
+              {/* All updates — listed from the top, each clickable; scrolls
+                  within the panel when the list outgrows it (the header's
+                  "View All" covers navigation, so no extra footer link) */}
+              <div className="mt-3 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto overscroll-contain pr-0.5">
                 {UPDATES.map((update) => (
                   <UpdateLink
                     key={update.id}
                     update={update}
-                    className="group flex items-center gap-2.5 rounded-lg px-2 py-3 transition-colors hover:bg-fg/[0.04]"
+                    className="group flex items-center gap-2.5 rounded-lg px-2 py-2.5 transition-colors hover:bg-fg/[0.04]"
                   >
                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 self-start rounded-full bg-brand-2 transition-transform group-hover:scale-125" />
                     <span className="min-w-0 flex-1 text-[13px] leading-snug text-muted transition-colors group-hover:text-fg">
@@ -290,19 +301,10 @@ export default function Hero() {
                   </UpdateLink>
                 ))}
               </div>
-
-              {/* See all — pinned to the bottom of the panel */}
-              <Link
-                to="/updates"
-                className="mt-3 flex items-center justify-center gap-1.5 border-t border-edge pt-4 text-[11px] font-medium text-muted transition-colors hover:text-fg"
-              >
-                <Zap size={9} className="text-brand-2" />
-                See all announcements →
-              </Link>
             </div>
 
             {/* Upcoming exams — compact stacked cards with status pills */}
-            <div className="anim-hero anim-d5 rounded-2xl border border-edge bg-card/70 px-5 py-5 shadow-[var(--shadow-card)] backdrop-blur-sm">
+            <div className="anim-hero anim-d5 shrink-0 rounded-2xl border border-edge bg-card/70 px-5 py-4 shadow-[var(--shadow-card)] backdrop-blur-sm">
               <div className="flex items-center gap-2">
                 <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-brand-2/15 text-brand-2">
                   <CalendarClock size={11} />
@@ -310,9 +312,9 @@ export default function Hero() {
                 <p className="eyebrow text-[11px]">Also Preparing For</p>
               </div>
 
-              <span className="mt-3.5 block h-px bg-edge" />
+              <span className="mt-3 block h-px bg-edge" />
 
-              <div className="mt-3.5 space-y-2.5">
+              <div className="mt-3 space-y-2">
                 <button
                   type="button"
                   className="hero-chip hero-chip-cuet flex w-full items-center gap-2.5 rounded-xl border border-edge bg-bg/60 px-3 py-2.5 text-left"
@@ -344,6 +346,7 @@ export default function Hero() {
                   <UpcomingBadge />
                 </button>
               </div>
+            </div>
             </div>
           </aside>
 

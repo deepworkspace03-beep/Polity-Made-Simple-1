@@ -13,7 +13,7 @@ export const SITE = {
   // Footer identity (kept separate from the header brand on purpose).
   footerInitiative: "A JRF Club Initiative", // colourful footer brand line
   footerTagline: "Study Smarter. Learn Faster.", // line under the footer title
-  copyrightName: "Political Science Made Simple", // owner shown in the © line
+  copyrightName: "Polity Made Simple", // owner shown in the © line (domain & channel name)
 
   // Your real links:
   telegram: "https://t.me/politicalsciencenetjrfclub",
