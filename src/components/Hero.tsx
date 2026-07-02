@@ -218,17 +218,6 @@ export default function Hero() {
                   <UpcomingBadge />
                 </button>
               </div>
-
-              {/* More updates soon — placeholder row under the upcoming chips */}
-              <button
-                type="button"
-                className="group mt-6 flex w-full items-center justify-center gap-2 rounded-lg gradient-brand px-3 py-2 text-white shadow-sm transition-transform active:scale-[0.98] sm:mt-7 sm:py-2.5"
-              >
-                <Zap size={12} className="animate-pulse" fill="currentColor" />
-                <span className="text-[11px] font-semibold sm:text-xs">
-                  More updates soon
-                </span>
-              </button>
             </div>
           </div>
 
