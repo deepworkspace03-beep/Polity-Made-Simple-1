@@ -7,6 +7,7 @@ import {
   Zap,
   ClipboardList,
   Sparkles,
+  CalendarClock,
 } from "lucide-react";
 import { SITE } from "../config";
 import { UPDATES } from "../data/updates";
@@ -15,6 +16,10 @@ import SyllabusChip from "./SyllabusChip";
 
 const PAPER_1_TOPICS = ["Teaching Aptitude", "Research Methodology", "ICT & Reasoning"];
 const PAPER_2_TOPICS = ["Political Theory", "Indian Government", "International Relations"];
+
+// Split "UGC NET JRF · December 2026" so the session gets the gradient accent.
+// If the "·" is ever removed from config, the whole label renders plainly.
+const [EXAM_NAME, EXAM_SESSION] = SITE.examLabel.split("·").map((s) => s.trim());
 
 /**
  * Muted "Upcoming" status pill — filled with the page background so it blends
@@ -50,41 +55,42 @@ export default function Hero() {
         className="anim-glow pointer-events-none absolute -left-16 bottom-8 h-64 w-64 rounded-full bg-brand/10 blur-3xl"
       />
 
-      {/* Vertically-centered content fills the first screen; a two-column
-          grid on desktop aligns the updates panel with the exam card. */}
+      {/* Vertically-centered content fills the first screen. */}
       <div className="relative mx-auto flex min-h-[calc(100svh-124px)] max-w-6xl flex-col justify-center px-4 py-8 sm:px-6 lg:min-h-[calc(100svh-68px)] lg:py-10">
-        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-x-10 lg:gap-y-10">
 
-          {/* ── Heading block (desktop: col 1 / row 1) ── */}
-          <div className="text-center lg:col-start-1 lg:row-start-1">
-            {/* Eyebrow */}
-            <span className="anim-hero eyebrow inline-flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-2" />
-              {SITE.initiative}
+        {/* ── Heading block — full width; a single line on desktop so the
+            top of the hero reads as one balanced, symmetrical banner ── */}
+        <div className="text-center">
+          {/* Eyebrow */}
+          <span className="anim-hero eyebrow inline-flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-2" />
+            {SITE.initiative}
+          </span>
+
+          {/* Heading — wraps naturally on mobile, one line on desktop */}
+          <h1 className="anim-hero anim-d1 mt-3 text-[2rem] font-extrabold leading-[1.05] tracking-tight sm:mt-4 sm:text-6xl sm:leading-[1.08] lg:whitespace-nowrap lg:text-[3.25rem] xl:text-[3.75rem]">
+            Political Science{" "}
+            <span className="text-gradient">Made Simple</span>
+          </h1>
+
+          {/* Subtitle — one compact line on desktop */}
+          <p className="anim-hero anim-d2 mx-auto mt-3 max-w-lg text-[13px] text-muted sm:mt-4 sm:text-base lg:max-w-none">
+            <span className="sm:hidden">
+              Notes, PYQs, mock tests &amp; strategy — all in one place.
             </span>
+            <span className="hidden sm:inline">
+              Notes, PYQs, mock tests, current affairs and exam strategy —
+              everything you need, in one clean place.
+            </span>
+          </p>
+        </div>
 
-            {/* Heading */}
-            <h1 className="anim-hero anim-d1 mt-3 text-[2rem] font-extrabold leading-[1.05] tracking-tight sm:mt-4 sm:text-6xl sm:leading-[1.08] lg:text-[4.25rem]">
-              Political Science{" "}
-              <span className="text-gradient">Made Simple</span>
-            </h1>
+        {/* ── Two-column body: exam block (left) · updates + upcoming (right) ── */}
+        <div className="mt-9 sm:mt-11 lg:mt-10 lg:grid lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-stretch lg:gap-8 xl:grid-cols-[minmax(0,1fr)_20rem] xl:gap-10">
 
-            {/* Subtitle */}
-            <p className="anim-hero anim-d2 mx-auto mt-3 max-w-lg text-[13px] text-muted sm:mt-4 sm:text-base">
-              <span className="sm:hidden">
-                Notes, PYQs, mock tests &amp; strategy — all in one place.
-              </span>
-              <span className="hidden sm:inline">
-                Notes, PYQs, mock tests, current affairs and exam strategy —{" "}
-                <br className="hidden sm:block" />
-                everything you need, in one clean place.
-              </span>
-            </p>
-          </div>
-
-          {/* ── Exam card + upcoming chips (desktop: col 1 / row 2) ── */}
-          <div className="mt-9 sm:mt-11 lg:col-start-1 lg:row-start-2 lg:mt-0">
-            <div className="mx-auto w-full max-w-lg">
+          {/* ── LEFT — primary exam card + (mobile-only) upcoming chips ── */}
+          <div className="lg:flex lg:flex-col lg:justify-center">
+            <div className="mx-auto w-full max-w-lg lg:max-w-2xl">
 
               {/* Material updates badge — sits half-over the top edge of the exam card */}
               <div className="anim-hero anim-d2 relative z-10 mb-[-14px] flex justify-center sm:mb-[-16px]">
@@ -94,19 +100,27 @@ export default function Hero() {
                 </span>
               </div>
 
-              {/* Grouped exam card: exam tag · Hindi · Papers · Mock series */}
-              <div className="anim-hero anim-d3 rounded-2xl border border-edge bg-card/60 px-3 pb-3 pt-6 shadow-sm backdrop-blur-sm sm:px-4 sm:pb-4 sm:pt-7">
+              {/* Grouped exam card: primary heading · Hindi · Papers · Mock series */}
+              <div className="anim-hero anim-d3 rounded-2xl border border-edge bg-card/60 px-3 pb-3 pt-6 shadow-sm backdrop-blur-sm sm:px-4 sm:pb-4 sm:pt-7 lg:px-6 lg:pb-6 lg:pt-8">
 
-                {/* Exam tag + Hindi availability */}
-                <div className="flex flex-col items-center gap-2">
-                  <span className="inline-flex items-center gap-2.5 rounded-xl border border-edge bg-card px-4 py-1.5 shadow-sm">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg gradient-brand text-white">
-                      <GraduationCap size={15} />
-                    </span>
-                    <span className="text-sm font-bold text-fg sm:text-[15px]">
-                      {SITE.examLabel}
-                    </span>
+                {/* Primary exam heading — the clear focal point of the hero */}
+                <div className="flex flex-col items-center gap-2 sm:gap-2.5">
+                  <span className="eyebrow inline-flex items-center gap-1.5 text-[9px] tracking-[0.22em] sm:text-[10px]">
+                    <GraduationCap size={13} className="text-brand" />
+                    Target Exam
                   </span>
+
+                  <h2 className="text-center text-[1.75rem] font-extrabold leading-[1.12] tracking-tight sm:text-4xl lg:text-[2.6rem]">
+                    <span className="whitespace-nowrap">{EXAM_NAME}</span>
+                    {EXAM_SESSION && (
+                      <>
+                        {" "}
+                        <span className="text-gradient whitespace-nowrap">
+                          {EXAM_SESSION}
+                        </span>
+                      </>
+                    )}
+                  </h2>
 
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-2/35 bg-brand-2/10 px-3 py-1 text-[12px] font-semibold text-fg sm:text-[13px]">
                     <Languages size={13} className="text-brand-2" />
@@ -116,7 +130,7 @@ export default function Hero() {
                 </div>
 
                 {/* Paper cards — whole card links; a Syllabus chip sits in the corner */}
-                <div className="mt-3 grid grid-cols-2 gap-2.5 sm:mt-4 sm:gap-3">
+                <div className="mt-3 grid grid-cols-2 gap-2.5 sm:mt-4 sm:gap-3 lg:mt-5 lg:gap-4">
 
                   {/* Paper 1 */}
                   <div className="hero-card hero-card-p1 card relative flex flex-col bg-bg p-3 text-left sm:p-4">
@@ -196,9 +210,9 @@ export default function Hero() {
                 </Link>
               </div>
 
-              {/* ── Upcoming exams — two compact columns on every screen,
-                  each with a muted "Upcoming" status pill ── */}
-              <div className="anim-hero anim-d4 mt-4 grid grid-cols-2 gap-2.5 sm:mt-5 sm:gap-3">
+              {/* ── Upcoming exams — mobile/tablet only; on desktop these live
+                  in the right-hand column instead ── */}
+              <div className="anim-hero anim-d4 mt-4 grid grid-cols-2 gap-2.5 sm:mt-5 sm:gap-3 lg:hidden">
                 <button
                   type="button"
                   className="hero-chip hero-chip-cuet flex min-w-0 items-center gap-1.5 rounded-lg border border-edge bg-card px-2.5 py-2 text-left transition-colors hover:bg-fg/[0.04] active:scale-[0.98] sm:gap-2.5 sm:px-4 sm:py-3"
@@ -230,10 +244,12 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ── Desktop updates panel (col 2) — premium card, vertically
-              centered against the full hero content for a balanced layout ── */}
-          <aside className="hidden lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:flex lg:items-center">
-            <div className="anim-hero anim-d4 flex w-full flex-col rounded-2xl border border-edge bg-card/70 px-5 py-7 shadow-[var(--shadow-card)] backdrop-blur-sm xl:min-h-[28rem]">
+          {/* ── RIGHT — updates panel on top, upcoming exams below, so the
+              column fills the space beside the exam card evenly ── */}
+          <aside className="hidden lg:flex lg:flex-col lg:gap-4">
+
+            {/* Latest updates — stretches to keep the column height balanced */}
+            <div className="anim-hero anim-d4 flex w-full flex-1 flex-col rounded-2xl border border-edge bg-card/70 px-5 py-6 shadow-[var(--shadow-card)] backdrop-blur-sm">
 
               {/* Header with View All */}
               <div className="flex items-center justify-between">
@@ -255,15 +271,15 @@ export default function Hero() {
               <span className="mt-4 block h-px bg-edge" />
 
               {/* All updates — listed from the top, each clickable */}
-              <div className="mt-3 flex flex-1 flex-col justify-start gap-1 overflow-y-auto pr-0.5">
+              <div className="mt-3 flex flex-1 flex-col gap-1 overflow-y-auto pr-0.5">
                 {UPDATES.map((update) => (
                   <UpdateLink
                     key={update.id}
                     update={update}
-                    className="group flex items-center gap-2.5 rounded-lg px-2 py-2.5 transition-colors hover:bg-fg/[0.04]"
+                    className="group flex items-center gap-2.5 rounded-lg px-2 py-3 transition-colors hover:bg-fg/[0.04]"
                   >
                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 self-start rounded-full bg-brand-2 transition-transform group-hover:scale-125" />
-                    <span className="min-w-0 flex-1 text-xs leading-snug text-muted transition-colors group-hover:text-fg">
+                    <span className="min-w-0 flex-1 text-[13px] leading-snug text-muted transition-colors group-hover:text-fg">
                       {update.short ?? update.text}
                     </span>
                     {update.isNew && (
@@ -283,6 +299,51 @@ export default function Hero() {
                 <Zap size={9} className="text-brand-2" />
                 See all announcements →
               </Link>
+            </div>
+
+            {/* Upcoming exams — compact stacked cards with status pills */}
+            <div className="anim-hero anim-d5 rounded-2xl border border-edge bg-card/70 px-5 py-5 shadow-[var(--shadow-card)] backdrop-blur-sm">
+              <div className="flex items-center gap-2">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-brand-2/15 text-brand-2">
+                  <CalendarClock size={11} />
+                </span>
+                <p className="eyebrow text-[11px]">Also Preparing For</p>
+              </div>
+
+              <span className="mt-3.5 block h-px bg-edge" />
+
+              <div className="mt-3.5 space-y-2.5">
+                <button
+                  type="button"
+                  className="hero-chip hero-chip-cuet flex w-full items-center gap-2.5 rounded-xl border border-edge bg-bg/60 px-3 py-2.5 text-left"
+                >
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-2/15 text-brand-2">
+                    <BookOpen size={15} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[13px] font-bold text-fg">CUET-PG</span>
+                    <span className="block truncate text-[10px] text-muted">PG entrance exam</span>
+                  </span>
+                  <UpcomingBadge />
+                </button>
+
+                <button
+                  type="button"
+                  className="hero-chip hero-chip-rset flex w-full items-center gap-2.5 rounded-xl border border-edge bg-bg/60 px-3 py-2.5 text-left"
+                >
+                  <span
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+                    style={{ backgroundColor: "rgb(245 158 11 / 0.12)", color: "rgb(217 119 6)" }}
+                  >
+                    <Landmark size={15} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[13px] font-bold text-fg">Rajasthan SET</span>
+                    <span className="block truncate text-[10px] text-muted">State Eligibility Test</span>
+                  </span>
+                  <UpcomingBadge />
+                </button>
+              </div>
             </div>
           </aside>
 
