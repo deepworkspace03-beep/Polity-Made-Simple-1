@@ -127,8 +127,9 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
             {/* Mobile menu */}
             <button
               onClick={() => setMenuOpen((o) => !o)}
-              aria-label="Open menu"
-              className="flex h-9 w-9 items-center justify-center border border-edge text-fg transition-colors hover:bg-fg/5 active:scale-95 lg:hidden"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-edge text-fg transition-colors hover:bg-fg/5 active:scale-95 lg:hidden"
             >
               {menuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -161,7 +162,7 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
           <button
             onClick={() => setMenuOpen(false)}
             aria-label="Close menu"
-            className="flex h-8 w-8 items-center justify-center border border-edge text-muted hover:bg-fg/5 active:scale-95"
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-edge text-muted hover:bg-fg/5 active:scale-95"
           >
             <X size={15} />
           </button>

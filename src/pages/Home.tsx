@@ -85,7 +85,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <Hero />
+      <Hero onComingSoon={setToast} />
       <QuickAccess onPick={handlePick} onComingSoon={setToast} />
       <MaterialsBrowser
         types={types}

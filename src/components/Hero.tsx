@@ -38,7 +38,11 @@ function UpcomingBadge() {
   );
 }
 
-export default function Hero() {
+export default function Hero({
+  onComingSoon,
+}: {
+  onComingSoon: (message: string) => void;
+}) {
   return (
     <section
       id="home"
@@ -221,6 +225,7 @@ export default function Hero() {
               <div className="anim-hero anim-d4 mt-4 grid grid-cols-2 gap-2.5 sm:mt-5 sm:gap-3 lg:hidden">
                 <button
                   type="button"
+                  onClick={() => onComingSoon("CUET-PG materials — coming soon. Stay tuned!")}
                   className="hero-chip hero-chip-cuet flex min-w-0 items-center gap-1.5 rounded-lg border border-edge bg-card px-2.5 py-2 text-left transition-colors hover:bg-fg/[0.04] active:scale-[0.98] sm:gap-2.5 sm:px-4 sm:py-3"
                 >
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-brand-2/15 text-brand-2 sm:h-7 sm:w-7">
@@ -231,6 +236,7 @@ export default function Hero() {
                 </button>
                 <button
                   type="button"
+                  onClick={() => onComingSoon("Rajasthan SET materials — coming soon. Stay tuned!")}
                   className="hero-chip hero-chip-rset flex min-w-0 items-center gap-1.5 rounded-lg border border-edge bg-card px-2.5 py-2 text-left transition-colors hover:bg-fg/[0.04] active:scale-[0.98] sm:gap-2.5 sm:px-4 sm:py-3"
                 >
                   <span
@@ -317,6 +323,7 @@ export default function Hero() {
               <div className="mt-3 space-y-2">
                 <button
                   type="button"
+                  onClick={() => onComingSoon("CUET-PG materials — coming soon. Stay tuned!")}
                   className="hero-chip hero-chip-cuet flex w-full items-center gap-2.5 rounded-xl border border-edge bg-bg/60 px-3 py-2.5 text-left"
                 >
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-2/15 text-brand-2">
@@ -331,6 +338,7 @@ export default function Hero() {
 
                 <button
                   type="button"
+                  onClick={() => onComingSoon("Rajasthan SET materials — coming soon. Stay tuned!")}
                   className="hero-chip hero-chip-rset flex w-full items-center gap-2.5 rounded-xl border border-edge bg-bg/60 px-3 py-2.5 text-left"
                 >
                   <span
