@@ -125,10 +125,12 @@
     color: transparent;
   }
 
-  /* Hero section: gradient + subtle dot grid (softer in light mode). */
+  /* Hero section: gradient + dot grid. Light mode's --edge is too close to
+     its own background to read as dots, so it uses --fg at low opacity
+     instead — matches the visible dot-grid look dark mode gets for free. */
   .section-hero {
     background-image:
-      radial-gradient(rgb(var(--edge) / 0.22) 1.5px, transparent 1.5px),
+      radial-gradient(rgb(var(--fg) / 0.14) 1.5px, transparent 1.5px),
       linear-gradient(170deg, rgb(var(--band)) 0%, rgb(var(--bg)) 100%);
     background-size: 30px 30px, 100% 100%;
   }

@@ -6,6 +6,7 @@ import {
   Landmark,
   Zap,
   ClipboardList,
+  Sparkles,
 } from "lucide-react";
 import { SITE } from "../config";
 import { UPDATES } from "../data/updates";
@@ -85,8 +86,16 @@ export default function Hero() {
           <div className="mt-9 sm:mt-11 lg:col-start-1 lg:row-start-2 lg:mt-0">
             <div className="mx-auto w-full max-w-lg">
 
+              {/* Material updates badge — sits half-over the top edge of the exam card */}
+              <div className="anim-hero anim-d2 relative z-10 mb-[-14px] flex justify-center sm:mb-[-16px]">
+                <span className="inline-flex items-center gap-1.5 rounded-full gradient-brand px-4 py-1.5 text-[11px] font-semibold text-white shadow-sm sm:text-xs">
+                  <Sparkles size={13} />
+                  Material Updates Every Week
+                </span>
+              </div>
+
               {/* Grouped exam card: exam tag · Hindi · Papers · Mock series */}
-              <div className="anim-hero anim-d3 rounded-2xl border border-edge bg-card/60 p-3 shadow-sm backdrop-blur-sm sm:p-4">
+              <div className="anim-hero anim-d3 rounded-2xl border border-edge bg-card/60 px-3 pb-3 pt-6 shadow-sm backdrop-blur-sm sm:px-4 sm:pb-4 sm:pt-7">
 
                 {/* Exam tag + Hindi availability */}
                 <div className="flex flex-col items-center gap-2">
